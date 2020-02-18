@@ -1,5 +1,5 @@
 <html>
-  <head>
+<head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CentOS 7 中所遇见的异常 | Gridea</title>
@@ -15,10 +15,9 @@
 <script src="https://Yanoona.github.io/media/js/functions.js"></script>
     <script src="https://Yanoona.github.io/media/js/waterfall.min.js"></script>
     <script src="https://Yanoona.github.io/media/js/prism.min.js"></script>
-    
-  </head>
-  <body>
-      <header id="header" class="grid-container">
+</head>
+<body>
+<header id="header" class="grid-container">
     <!-- start: .menu-wrapper -->
     <div class="menu-mobile">
         <i class="fa fa-reorder"></i>
@@ -64,36 +63,34 @@
     <div class="clear"></div>
 </header>
 
-      <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
+<main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
 
-        <div class="center content">
-          <div class="featured-image cover" style="background-image: url('https://Yanoona.github.io/post-images/JD2fNczzi.jpg');">
-            <div class="meta top"> 
-              <time class="meta-info" style="float:left;" datetime="2020-02-18"><i class="fa fa-calendar"></i><span class="lately">1 小时前</span></time>
-               
-               
-               <span id="/post/JD2fNczzi/" class="leancloud_visitors views-counter meta-info">
-                <i class="fa fa-leancloud"></i><span class="leancloud-visitors-count" style="vertical-align: middle;">0</span>
-               </span>
-               
+    <div class="center content">
+        <div class="featured-image cover"
+             style="background-image: url('https://Yanoona.github.io/post-images/JD2fNczzi.jpg');">
+            <div class="meta top">
+                <time class="meta-info" style="float:left;" datetime="2020-02-18"><i
+                            class="fa fa-calendar"></i><span
+                            class="lately">2 小时前</span></time>
             </div>
             <div class="info">
-              <div class="tags ">
-                
-                      <a href="https://Yanoona.github.io/j_dWapwnj/" class="ctag ctag-0 ctag-j_dWapwnj" aria-label="">CentOS 7</a>
+                <div class="tags ">
                     
-              </div>
-              <h1 class="title ularge white bold">CentOS 7 中所遇见的异常</h1>
+                        <a href="https://Yanoona.github.io/j_dWapwnj/" class="ctag ctag-0 ctag-j_dWapwnj"
+                           aria-label="">CentOS 7</a>
+                    
+                </div>
+                <h1 class="title ularge white bold">CentOS 7 中所遇见的异常</h1>
             </div>
-          </div>
-        </div>  
+        </div>
+    </div>
 
-        <div class="epcl-page-wrapper">
-          <div class="left-content grid-70 np-mobile">
+    <div class="epcl-page-wrapper">
+        <div class="left-content grid-70 np-mobile">
             <article class="main-article post">
-              <section class="post-content">
-                <div class="text">
-                  <h2 id="网络异常">网络异常</h2>
+                <section class="post-content">
+                    <div class="text">
+                        <h2 id="网络异常">网络异常</h2>
 <h3 id="一-查看不到-ipv4-地址">一、查看不到 IPV4 地址</h3>
 <blockquote>
 <p><strong>😉异常说明：使用<code>ip addr</code>命令查询 IP 地址时，找不到 IPV4 地址。查询结果如下图所示：</strong></p>
@@ -108,35 +105,23 @@
  systemctl restart network
 </code></pre>
 
-                </div>
-                <div class="clear"></div>
-              </section>
+                    </div>
+                    <div class="clear"></div>
+                </section>
             </article>
             <div class="clear"></div>
 
             <section class="related section">
-              
-              
+                
+                
 
                 <div class="clear"></div>
             </section>
+        </div>
+    </div>
+</main>
 
-              <div class="clear"></div>
-
-              <div id="comments" class="bg-white hosted ">
-
-              
-                <p>请到客户端“主题--自定义配置--valine”中填入ID和KEY</p>
-              
-                <div class="clear"></div>
-              </div>
-
-              <div class="clear"></div>
-            </div>
-          </div>
-      </main>
-
-          <footer id="footer" class="grid-container">
+    <footer id="footer" class="grid-container">
         <div class="widgets row gradient-effect">
             <div class="default-sidebar border-effect">
               <div class="grid-33 tablet-grid-50 mobile-grid-100">
@@ -217,50 +202,51 @@
     </footer>
     <div class="clear"></div>
 
-      <script type="text/javascript">
-       jQuery(document).ready(function($){
-          $("photos img").each(function(){
-              var _a = $("<a></a>").attr("href",this.src);
-              $(this).wrap("<div class='photo'></div>").wrap(_a);
-          })
-          $("figure img").each(function(){
-              var _b = $("<a></a>").attr("href",this.src);
-              $(this).wrap(_b);
-          })
-          isImgLoad(function(){
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $("photos img").each(function () {
+            var _a = $("<a></a>").attr("href", this.src);
+            $(this).wrap("<div class='photo'></div>").wrap(_a);
+        })
+        $("figure img").each(function () {
+            var _b = $("<a></a>").attr("href", this.src);
+            $(this).wrap(_b);
+        })
+        isImgLoad(function () {
             var photos = document.querySelector('photos');
-            if(photos){
-              waterfall(photos);
+            if (photos) {
+                waterfall(photos);
             }
-            $(window).resize(function() {
-             if(photos){
-                  waterfall(photos);
-            }
-          });
+            $(window).resize(function () {
+                if (photos) {
+                    waterfall(photos);
+                }
+            });
         });
         var t_img;
         var isLoad = true;
-        function isImgLoad(callback){
-          $('photos img').each(function(){
-            if(this.height === 0){
-              isLoad = false;
-              return false;
-            }
-          });
-          if(isLoad){
-            clearTimeout(t_img);
-            callback();
-          }else{
-            isLoad = true;
-            t_img = setTimeout(function(){
-              isImgLoad(callback);
-            },500);
-          }
-        }
-      });
-      </script>
 
-    </div>
-    <!-- end: #wrapper -->
-  </body>
+        function isImgLoad(callback) {
+            $('photos img').each(function () {
+                if (this.height === 0) {
+                    isLoad = false;
+                    return false;
+                }
+            });
+            if (isLoad) {
+                clearTimeout(t_img);
+                callback();
+            } else {
+                isLoad = true;
+                t_img = setTimeout(function () {
+                    isImgLoad(callback);
+                }, 500);
+            }
+        }
+    });
+</script>
+
+</div>
+<!-- end: #wrapper -->
+</body>
 </html>
