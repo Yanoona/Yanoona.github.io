@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Yanoona.github.io</id>
-    <title>Gridea</title>
-    <updated>2020-02-19T06:29:02.242Z</updated>
+    <title>姿势美如画( *・ω・)✄╰ひ╯</title>
+    <updated>2020-02-19T06:54:04.258Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Yanoona.github.io"/>
     <link rel="self" href="https://Yanoona.github.io/atom.xml"/>
     <subtitle>大爷不进来看看吗？这里有好康的哦~~~</subtitle>
     <logo>https://Yanoona.github.io/images/avatar.png</logo>
     <icon>https://Yanoona.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, Gridea</rights>
+    <rights>All rights reserved 2020, 姿势美如画( *・ω・)✄╰ひ╯</rights>
     <entry>
         <title type="html"><![CDATA[Hadoop到Mysql的数据传输记录]]></title>
         <id>https://Yanoona.github.io/NNC7-_gM_/</id>
         <link href="https://Yanoona.github.io/NNC7-_gM_/">
         </link>
         <updated>2020-02-19T06:11:24.000Z</updated>
+        <summary type="html"><![CDATA[<h2 id="概述">概述</h2>
+<p>本文档主要记录使用 <code>HIve Load</code> 将 <code>Hadoop</code> 中的文件保存到 <code>HIve</code> 的数据库中，再将其通过 <code>Sqoop export</code> 到 <code>Mysql</code> 的详细步骤🙊；</p>
+]]></summary>
+        <content type="html"><![CDATA[<h2 id="概述">概述</h2>
+<p>本文档主要记录使用 <code>HIve Load</code> 将 <code>Hadoop</code> 中的文件保存到 <code>HIve</code> 的数据库中，再将其通过 <code>Sqoop export</code> 到 <code>Mysql</code> 的详细步骤🙊；</p>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[CentOS 7安装和卸载MySql]]></title>
@@ -23,6 +29,18 @@
         <link href="https://Yanoona.github.io/TeSMMvZK8/">
         </link>
         <updated>2020-02-19T03:00:11.000Z</updated>
+        <summary type="html"><![CDATA[<h2 id="概述">😀概述</h2>
+<p>记录一次CentOS7安装Mysql5.7的步骤和卸载Mysql的步骤。</p>
+<h2 id="环境说明">😃环境说明</h2>
+<p>机器系统版本：CentOS7.9<br>
+所安装Mysql版本：MySql5.7</p>
+]]></summary>
+        <content type="html"><![CDATA[<h2 id="概述">😀概述</h2>
+<p>记录一次CentOS7安装Mysql5.7的步骤和卸载Mysql的步骤。</p>
+<h2 id="环境说明">😃环境说明</h2>
+<p>机器系统版本：CentOS7.9<br>
+所安装Mysql版本：MySql5.7</p>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[CentOS 7 中所遇见的异常]]></title>
