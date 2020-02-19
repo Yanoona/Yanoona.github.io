@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Yanoona.github.io</id>
     <title>姿势美如画( *・ω・)✄╰ひ╯</title>
-    <updated>2020-02-19T07:39:19.342Z</updated>
+    <updated>2020-02-19T07:42:46.387Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Yanoona.github.io"/>
     <link rel="self" href="https://Yanoona.github.io/atom.xml"/>
@@ -16,6 +16,258 @@
         <link href="https://Yanoona.github.io/vqAakgQmf/">
         </link>
         <updated>2020-02-19T07:27:57.000Z</updated>
+        <summary type="html"><![CDATA[<h2 id="概述">😀概述</h2>
+<p>Sqoop 是 apache 旗下一款“Hadoop 和关系数据库服务器之间传送数据”的工具。<br>
+核心的功能有两个：导入、导出<br>
+本文档用于记录 Sqoop的安装和使用。</p>
+]]></summary>
+        <content type="html"><![CDATA[<h2 id="概述">😀概述</h2>
+<p>Sqoop 是 apache 旗下一款“Hadoop 和关系数据库服务器之间传送数据”的工具。<br>
+核心的功能有两个：导入、导出<br>
+本文档用于记录 Sqoop的安装和使用。</p>
+<!-- more -->
+<blockquote>
+<p>建议🗣<code>先配置好Hadoop的JobHistory节点</code>，以便于在Web中的Yarn界面查看MapReduce任务日志信息。</p>
+</blockquote>
+<h2 id="sqoop安装">😃Sqoop安装</h2>
+<h3 id="1前提概述">1.前提概述</h3>
+<blockquote>
+<ul>
+<li><strong>Sqoop就是一个工具， 只需要在一个节点上进行安装即可。</strong></li>
+</ul>
+<ul>
+<li><strong>你安装的Sqoop软件的节点一定要包含你要使用的集群或者软件系统的安装包</strong></li>
+</ul>
+</blockquote>
+<h3 id="2-软件下载">2. 软件下载</h3>
+<p>下载地址：⚡️<a href="http://mirrors.hust.edu.cn/apache/sqoop/">点击此处打开Sqoop下载链接</a>⚡️</p>
+<blockquote>
+<p>注意👇：</p>
+<ol>
+<li>
+<p>下载<code>sqoop-xx.bin__xx.tar.gz</code>的安装压缩包。</p>
+</li>
+<li>
+<p>Sqoop 1 和Sqoop 2不兼容，且绝大部分企业所使用的Sqoop的版本是 Sqoop 1。</p>
+<p>​	1.4.7版本的为Sqoop 1</p>
+<p>​	1.99.7版本的为Sqoop 2</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="安装">😄安装</h2>
+<h3 id="1创建sqoop安装目录">1.创建sqoop安装目录</h3>
+<pre><code>mkdir /usr/local/sqoop
+</code></pre>
+<h3 id="2解压安装包到指定目录">2.解压安装包到指定目录</h3>
+<p>上传☝️解压缩安装包到指定目录（此处跳过了Ftp传输步骤）。</p>
+<p>因为之前hive只是安装在hadoop1机器上，所以我这里Sqoop也同样安装在hadoop1机器上。👋</p>
+<pre><code>tar -zxvf sqoop-1.4.7.bin__hadoop-2.6.0.tar.gz /usr/local/sqoop
+</code></pre>
+<h3 id="3修改配置文件">3.修改配置文件</h3>
+<ol>
+<li>
+<p>进入到 conf 文件夹中，复制sqoop-env-template.sh，并将其修改为sqoop-env.sh</p>
+<pre><code>cp sqoop-env-template.sh sqoop-env.sh
+</code></pre>
+</li>
+<li>
+<p>修改sqoop-env.sh</p>
+<pre><code>vi sqoop-env.sh
+</code></pre>
+<pre><code>export HADOOP_MAPRED_HOME=/usr/local/hadoop/hadoop-2.9.2			#Hadoop的MapReduce安装路径
+export HADOOP_COMMON_HOME=/usr/local/hadoop/hadoop-2.9.2			#Hadoop的Common安装路径
+export HIVE_HOME=/usr/local/hive/hive							  #Hive安装路径
+</code></pre>
+<p>🙄为什么在sqoop-env.sh 文件中会要求分别进行 common和mapreduce的配置呢？？？</p>
+<blockquote>
+<p>🙋在apache的hadoop的安装中；四大组件都是安装在同一个hadoop_home中的</p>
+<p>🙋‍♂但是在CDH, HDP中， 这些组件都是可选的。</p>
+<p>🙋在安装hadoop的时候，可以选择性的只安装HDFS或者YARN，</p>
+<p>🙋‍♂CDH,HDP在安装hadoop的时候，会把HDFS和MapReduce有可能分别安装在不同的地方。</p>
+</blockquote>
+</li>
+<li>
+<p>将Mysql驱动包放到 lib 文件夹下</p>
+<pre><code>cp mysql-connector-java-5.1.48-bin.jar /usr/local/sqoop/sqoop-1.4.7/lib/
+</code></pre>
+</li>
+<li>
+<p>配置环境变量</p>
+<pre><code>vi /etc/profile
+</code></pre>
+<pre><code>#在末尾处添加以下行
+export SQOOP_HOME=/usr/local/sqoop/sqoop-1.4.7
+export PATH=${PATH}:${SQOOP_HOME}/bin
+</code></pre>
+<pre><code>#使文件生效
+source /etc/profile
+</code></pre>
+</li>
+<li>
+<p>验证是否安装成功👨‍🔧</p>
+<pre><code>sqoop version
+</code></pre>
+</li>
+</ol>
+<h2 id="sqoop的基本命令">😁Sqoop的基本命令</h2>
+<pre><code>#查看命令
+sqoop help
+
+#运行结果：
+usage: sqoop COMMAND [ARGS]
+
+Available commands:
+							#生成与数据库记录交互的代码
+  codegen            Generate code to interact with database records
+  							#将表定义导入到Hive中
+  create-hive-table  Import a table definition into Hive
+  							#计算一个SQL语句并显示结果，可以用来校验下import的查询条件是否正确。
+  eval               Evaluate a SQL statement and display the results
+  							#将HDFS目录导出到数据库表
+  export             Export an HDFS directory to a database table
+  							#可用命令列表
+  help               List available commands
+  							#将表从数据库导入到HDFS
+  import             Import a table from a database to HDFS
+  							#将所有表从数据库导入到HDFS
+  import-all-tables  Import tables from a database to HDFS
+  							#从大型机服务器导入数据集到HDFS
+  import-mainframe   Import datasets from a mainframe server to HDFS
+  							#将Import任务保存为job，可以理解为起了个别名，这样方便的Sqoop任务的管理。
+  job                Work with saved jobs
+  							#列出服务器上可用的数据库
+  list-databases     List available databases on a server
+  							#列出数据库上可用的b表
+  list-tables        List available tables in a database
+  							#增量导入的合并结果
+  merge              Merge results of incremental imports
+  							#运行一个独立的Sqoop metastore
+  metastore          Run a standalone Sqoop metastore
+  							#显示sqoop的版本
+  version            Display version information
+
+See 'sqoop help COMMAND' for information on a specific command.
+
+</code></pre>
+<h2 id="sqoop的基本使用">😆Sqoop的基本使用</h2>
+<blockquote>
+<p><strong>执行Sqoop命令时，请登录对hadoop有操作权限的系统用户🤴，否则会报没有权限等错误。</strong></p>
+<p>以下命令中出现的<code>\</code>为连接符，连接下一句命令，在实际操作中也可使用。</p>
+</blockquote>
+<hr>
+<h4 id="列出mysql中有哪些数据库">列出Mysql中有哪些数据库</h4>
+<pre><code>sqoop list-databases \
+-connect jdbc:mysql://localhost:3306/ \
+-username root \
+-password root
+</code></pre>
+<hr>
+<h4 id="列出mysql中指定数据库的表">列出Mysql中指定数据库的表</h4>
+<pre><code>sqoop list-tables \
+-connect jdbc:mysql://localhost:3306/sqoop_test \
+-username root \
+-password root
+</code></pre>
+<hr>
+<h4 id="创建一张跟sqoop_test库中user表结构一样的hive表hive_user">创建一张跟sqoop_test库中user表结构一样的hive表hive_user</h4>
+<blockquote>
+<p>此处需要将 hive 中的<code>hive-common-2.3.6.jar</code>包复制到 sqoop 的 lib 文件夹下，否则会报 <code>java.lang.ClassNotFoundException: org.apache.hadoop.hive.conf.HiveConf</code></p>
+</blockquote>
+<pre><code>sqoop create-hive-table \
+-connect jdbc:mysql://localhost:3306/sqoop_test \
+-username root \
+-password root \
+-table user \
+-hive-table hive_user					#要创建的hive表名
+</code></pre>
+<p>创建完后可登录hive查看，以下为所执行的命令：</p>
+<pre><code>hive												#登录Hive
+show databases;								#查看数据库
+use default;									#选择数据库,由于上面没有指定数据库，所以在默认数据库中创建了表
+show tables;									#列出Default数据库中的所有表
+</code></pre>
+<hr>
+<h4 id="mysqlhdfs从mysql导入到hdfs">Mysql→HDFS：从Mysql导入到HDFS</h4>
+<pre><code>sqoop import \
+-connect jdbc:mysql://{数据库IP}:3306/{数据库}?autoReconnect=true \		  #数据库连接
+-driver com.mysql.jdbc.Driver	\														#数据库驱动
+-username root	\																			#数据库用户名
+-password root	\																			#数据库密码
+-table user	\																				#数据库表
+-target-dir	/user/admin/temp/sqoop-import	\										#导入到HDFS的目标目录
+-fields-terminated-by ','	\															#按什么分隔
+-m 1																							#MapReduce执行任务数
+</code></pre>
+<p>拓展命令（在导出中同样适用）：</p>
+<pre><code>-where &quot;name = 'ZhangSan'&quot;																#带Where条件导入
+-columns &quot;name&quot; 																			#导入指定列
+#自定义Sql查询，导入查询后数据
+-query 'select * from mysql.help_keyword where $CONDITIONS and name = &quot;STRING&quot;' 				
+-split-by ‘id’																				#主键
+-incremental  append  																	#增量导入
+</code></pre>
+<blockquote>
+<p>在需要按照自定义SQL语句导出数据到HDFS的情况下👇👇：</p>
+<ul>
+<li>引号问题，要么外层使用单引号，内层使用双引号，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mi>O</mi><mi>N</mi><mi>D</mi><mi>I</mi><mi>T</mi><mi>I</mi><mi>O</mi><mi>N</mi><mi>S</mi><mi mathvariant="normal">的</mi></mrow><annotation encoding="application/x-tex">CONDITIONS的</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord cjk_fallback">的</span></span></span></span>符号不用转义， 要么外层使用双引号，那么内层使用单引号，然后<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mi>O</mi><mi>N</mi><mi>D</mi><mi>I</mi><mi>T</mi><mi>I</mi><mi>O</mi><mi>N</mi><mi>S</mi><mi mathvariant="normal">的</mi></mrow><annotation encoding="application/x-tex">CONDITIONS的</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord cjk_fallback">的</span></span></span></span>符号需要转义。</li>
+<li>自定义的SQL语句中必须带有WHERE $CONDITIONS</li>
+</ul>
+</blockquote>
+<hr>
+<h4 id="hdfsmysql从hdfs中导出到mysql">HDFS→Mysql：从HDFS中导出到Mysql</h4>
+<pre><code>sqoop export \
+-connect jdbc:mysql://{数据库IP}:3306/{数据库}?autoReconnect=true \			 #数据库连接
+-driver com.mysql.jdbc.Driver	\															#数据库驱动
+-username root	\																				#数据库用户名
+-password root	\																				#数据库密码
+-table sqoop_test	\																			#数据库表
+-export-dir	/user/admin/temp/sqoop-import	\											#导出HDFS的目标目录到Mysql
+-fields-terminated-by ','	\																#按什么分隔
+-split-by id	\																				#主键
+-m 1																								#MapReduce执行任务数
+</code></pre>
+<blockquote>
+<p>👨‍🏫记录问题👩‍🏫：</p>
+<ul>
+<li>若⭐️数据库连接或密码带上了 <code>$</code> 符号⭐️，则会导致后面语法报<strong>未找到命令错误</strong>；</li>
+<li>有时需带上 <code>-driver</code>命令，否则<strong>有可能会</strong>导致出现数据库连接失败错误；</li>
+<li>如果Mysql为8.0的版本，需要更改为8.0驱动包：<code>com.mysql.cj.jdbc.Driver</code></li>
+<li>执行命令时必须带上<code>-split-by</code>或者<code>-m 1</code>命令，否则会报错；</li>
+<li><code>-fields-terminated-by</code>命令表示 <strong>数据库中的列在导入文本中按照什么字符分隔</strong>，如上面例子中的 <strong>，</strong>;</li>
+</ul>
+</blockquote>
+<hr>
+<h4 id="mysqlhive从mysql导入到hive中">Mysql→Hive：从Mysql导入到Hive中</h4>
+<blockquote>
+<p><strong>导入过程：先导入到 hdfs，然后再 load 进入 hive😊</strong></p>
+<p><strong>普通导入：数据存储在Hive默认的default库中，表名就是对应的mysql的表名：😜</strong></p>
+</blockquote>
+<pre><code>sqoop import   \
+--connect jdbc:mysql://localhost:3306/sqoop_test   \			#数据库连接
+--username root  \														#数据库用户名
+--password root   \														#数据库密码
+--table user   \															#数据库表
+--hive-import \															#导入路径
+-m 1																			#任务并发数
+</code></pre>
+<p>查看 Hive 中的数据</p>
+<pre><code>hadoop fs -cat /user/hive/warehouse/user/part-m-00000			#user就是表名
+</code></pre>
+<p>拓展命令：</p>
+<pre><code>-fields-terminated-by &quot;，&quot;  									#数据按什么分隔
+-lines-terminated-by &quot;\n&quot;  									#行数按什么分隔
+-hive-overwrite 													#指定覆盖导入
+-create-hive-table  												#指定自动创建hive表
+-delete-target-dir 												#指定删除中间结果数据目录
+-hive-database  mydb_test 										#指定Hive数据库
+-hive-table new_user												#指定表名
+-incremental  append  											#增量导入
+</code></pre>
+<blockquote>
+<p>当指定Hive数据库时，必须先创建该数据库，否则会报<code>Database does not exist: xx</code>数据库不存在🌈。</p>
+<p>⚡️**从Hive导出到Mysql的步骤 和 从HDFS导出到Mysql的步骤 一致。**⚡️</p>
+</blockquote>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Hadoop到Mysql的数据传输记录]]></title>
@@ -28,6 +280,93 @@
 ]]></summary>
         <content type="html"><![CDATA[<h2 id="概述">概述</h2>
 <p>本文档主要记录使用 <code>HIve Load</code> 将 <code>Hadoop</code> 中的文件保存到 <code>HIve</code> 的数据库中，再将其通过 <code>Sqoop export</code> 到 <code>Mysql</code> 的详细步骤🙊；</p>
+<!-- more -->
+<h2 id="环境及测试数据说明">环境及测试数据说明</h2>
+<ul>
+<li>Hadoop - 2.9.2</li>
+<li>CentOS 7.9</li>
+<li>Hive 2.3.9</li>
+<li>Mysql 8.0</li>
+<li>Sqoop 1.4.7</li>
+<li>zy_fy_detail        659MB          5,691,514行</li>
+<li>zy_fy_year          512KB           4,656行</li>
+<li>zy_fy_yearmonth           59.59MB           516,883行</li>
+<li>以上表的文本间隔符为 <code>\001</code></li>
+</ul>
+<h2 id="开始">开始</h2>
+<h3 id="确认测试环境">确认测试环境</h3>
+<ul>
+<li>🌕使用<code>jps</code>查看 Hadoop 集群是否正常启动（包括<code>jobhistory</code>）</li>
+<li>🌖使用<code>systemctl status mysqld</code>查看<code>Mysql</code>是否正常运行</li>
+<li>🌗确认<code>hive</code>已经配置好了<code>mysql</code></li>
+</ul>
+<hr>
+<h3 id="将测试数据上传到hadoop中">将测试数据上传到Hadoop中</h3>
+<blockquote>
+<p>上传文件可以自己搭建ftp服务器实现，或者使用hadoop中的网页上传功能。👏👏</p>
+</blockquote>
+<p><strong>此处使用Hadoop上传</strong>：</p>
+<p>​		在浏览器除输入 http://hadoop1:50070:/，<em>hadoop1</em>为我这里的<em>NameNode</em>节点的主机名（如访问不了，可以试下换成IP访问😁）。点击 <em>Browse the file system</em> 进入目录页并单击红框处上传按钮。</p>
+<figure data-type="image" tabindex="1"><img src="https://Yanoona.github.io/post-images/1582092792811.png" alt="" loading="lazy"></figure>
+<p>如果出现以下类似信息🙄🙄（可以确定是<strong>权限问题</strong>）：</p>
+<figure data-type="image" tabindex="2"><img src="https://Yanoona.github.io/post-images/1582092804261.png" alt="" loading="lazy"></figure>
+<p>使用以下命令赋予权限后，就可以进行上传☝️、删除💀等操作：</p>
+<pre><code>hadoop fs -chmod 777 /user/admin/*
+</code></pre>
+<hr>
+<h3 id="创建接收数据的hive数据库">创建接收数据的Hive数据库</h3>
+<p><strong>😋进入Hive，并创建数据库（此处示例数据库名：bigdata）</strong></p>
+<pre><code>#进入Hive
+hive
+#显示数据库
+show databases;
+#创建数据库
+create database bigdata;
+#选择数据库
+use bigdata;
+</code></pre>
+<p><strong>🙁创建可识别多个分隔符的表（zy_fy_year）</strong></p>
+<pre><code> CREATE TABLE `zy_fy_year` (
+       `year` varchar(4),
+       `SFXM` decimal(4,0),
+       `FYMC` varchar(160),
+       `FYDJ` decimal(10,4),
+       `year_sl` decimal(32,2),
+       `year_ZJJE` decimal(34,2)
+     )  row format  serde 'org.apache.hadoop.hive.contrib.serde2.MultiDelimitSerDe' with  serdeproperties (&quot;field.delim&quot;=&quot;&amp;*#@&quot;);
+
+</code></pre>
+<blockquote>
+<p>Hive在0.14及以后版本支持字段的多分隔符，参考🚀<a href="https://link.jianshu.com/?t=https%3A%2F%2Fcwiki.apache.org%2Fconfluence%2Fdisplay%2FHive%2FMultiDelimitSerDe">https://cwiki.apache.org/confluence/display/Hive/MultiDelimitSerDe</a>🚀</p>
+<p>关键语句为👉：<code>row format serde 'org.apache.hadoop.hive.contrib.serde2.MultiDelimitSerDe' with serdeproperties (&quot;field.delim&quot;=&quot;你的分隔符&quot;);</code></p>
+<p>当只有一个分隔符时👉：<code>row format delimited fields terminated by '分隔符'</code></p>
+</blockquote>
+<p>😎<strong>使用Hive Load加载HDFS文件到表中</strong></p>
+<pre><code>#此处地址为Hadoop中zy_fy_year.txt文件的地址
+load data inpath '/test_data/test_files/zy_fy_year.txt' overwirte into table bigdata.zy_fy_year
+#查看插入结果是否有错
+select * from zy_fy_year limit 0,10;
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://Yanoona.github.io/post-images/1582092825986.png" alt="" loading="lazy"></figure>
+<hr>
+<h3 id="使用sqoop将hive中的数据导出到mysql中">😉使用Sqoop将Hive中的数据导出到Mysql中</h3>
+<p><strong>在Mysql创建导出数据库（bigdata）和表（zy_fy_year）🤗</strong></p>
+<pre><code>#登录mysql
+mysql -u root -p
+#创建数据库
+create database bigdata;
+#选择数据库
+use bigdata;
+#创建表
+create table `zy_fy_year` (
+  `year` varchar(4) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `SFXM` decimal(4,0) NOT NULL COMMENT '收费项目',
+  `FYMC` varchar(160) DEFAULT NULL COMMENT '费用名称',
+  `FYDJ` decimal(10,4) NOT NULL COMMENT '费用单价',
+  `year_sl` decimal(32,2) DEFAULT NULL COMMENT '年汇总数量',
+  `year_ZJJE` decimal(34,2) DEFAULT NULL COMMENT '总计金额'
+) engine=InnoDB default charset=utf8;
+</code></pre>
 ]]></content>
     </entry>
     <entry>
@@ -47,6 +386,113 @@
 <h2 id="环境说明">😃环境说明</h2>
 <p>机器系统版本：CentOS7.9<br>
 所安装Mysql版本：MySql5.7</p>
+<!-- more -->
+<h2 id="准备安装">😄准备安装</h2>
+<p>确保机器上已安装<code>wget</code>,如果没有安装过就使用以下命令进行安装。</p>
+<pre><code>yum -y install wget
+</code></pre>
+<h2 id="开始安装">😁开始安装</h2>
+<h3 id="进入官网复制yum源">进入官网复制yum源</h3>
+<figure data-type="image" tabindex="1"><img src="https://Yanoona.github.io/post-images/1582081400516.png" alt="" loading="lazy"></figure>
+<p>直接点开这个地址并选择第二个（<strong>第一个里面没有MySql5.7版本的下载</strong>）⚡️：<a href="https://dev.mysql.com/downloads/repo/yum/">https://dev.mysql.com/downloads/repo/yum/</a>⚡️</p>
+<p>点进去之后，右击超链接文字<strong>No thanks, just start my download.</strong>，再点击<strong>复制链接地址</strong>即可。如下图所示：<br>
+<img src="https://Yanoona.github.io/post-images/1582081448581.png" alt="" loading="lazy"></p>
+<hr>
+<h3 id="下载和安装yum源">下载和安装yum源</h3>
+<p>在服务器上运行下载命令👇：</p>
+<pre><code>wget https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
+</code></pre>
+<p>运行后继续输入以下命令：</p>
+<pre><code>rpm -ivh mysql80-community-release-el7-3.noarch.rpm
+</code></pre>
+<hr>
+<h3 id="修改yum源默认安装的版本">修改yum源默认安装的版本</h3>
+<p>👴运行查看可安装的mysql的命令：</p>
+<pre><code>yum repolist all| grep mysql
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://Yanoona.github.io/post-images/1582081748024.png" alt="" loading="lazy"></figure>
+<p>可以看出默认是启用的mysql8.0，5.7是关闭的。</p>
+<p>接着运行修改yum配置⚡️（enabled=1 想要安装哪个版本就在哪个版本的后面把0换成1，因为默认是最新版，所以需要把最新版的1换成0，5.7的换为1）⚡️命令：</p>
+<pre><code>vim /etc/yum.repos.d/mysql-community.repo
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://Yanoona.github.io/post-images/1582081761005.png" alt="" loading="lazy"></figure>
+<p>修改完成后再运行以下命令查看是否已经生效：</p>
+<pre><code>yum repolist all| grep mysql
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="https://Yanoona.github.io/post-images/1582081772383.png" alt="" loading="lazy"></figure>
+<p>可以看到配置文件已经生效，接下来使用yum安装MySql。</p>
+<hr>
+<h3 id="使用yum安装mysql">使用yum安装MySql</h3>
+<p>运行安装命令👇：</p>
+<pre><code>yum install -y mysql-community-server
+</code></pre>
+<figure data-type="image" tabindex="5"><img src="https://Yanoona.github.io/post-images/1582081783832.png" alt="" loading="lazy"></figure>
+<p><strong>等待安装完成即可！👀</strong></p>
+<h2 id="mysql配置">😆MySQL配置</h2>
+<h3 id="初始配置">初始配置</h3>
+<h4 id="启动mysql服务">🤔启动MySQL服务</h4>
+<pre><code>#启动
+systemctl start mysqld
+#查看状态
+systemctl status mysqld
+#设置开机自启
+systemctl enable mysqld
+</code></pre>
+<h4 id="查看mysql的初始密码">👀查看MySQL的初始密码</h4>
+<blockquote>
+<p>初始密码只有在第一次安装或者完全卸载后安装才会有。</p>
+</blockquote>
+<pre><code>grep 'password' /var/log/mysqld.log
+</code></pre>
+<figure data-type="image" tabindex="6"><img src="https://Yanoona.github.io/post-images/1582081794593.png" alt="" loading="lazy"></figure>
+<p>其中的👉<code>.trj4redlL!</code>👈为初始密码，使用其登录MySQL即可。</p>
+<h4 id="修改初始密码">修改初始密码</h4>
+<blockquote>
+<p>注意：MySQL5.7默认密码策略要求密码⭐️必须是<strong>大小写字母数字特殊字母</strong>的组合⭐️，至少8位</p>
+</blockquote>
+<pre><code>#修改密码
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'Root123@';
+</code></pre>
+<h4 id="设置简单密码">设置简单密码</h4>
+<p>修改MySQL密码策略，并设置简单密码进行访问🙈🙈。</p>
+<pre><code>#查看MySQL密码策略
+show variables like 'validate_password%';
+#设置全局验证密码策略
+set global validate_password_policy=low;
+#设置全局验证密码混合情况计数
+set global validate_password_mixed_case_count=0;
+#设置全局验证密码特殊的字符计数
+set global validate_password_special_char_count=0;
+#设置全集验证密码长度
+set global validate_password_length=4;
+</code></pre>
+<p>赋予用户权限（设置可远程访问🤖）。</p>
+<pre><code>grant all privileges on *.* to 'root'@'%' identified by 'root' with grant option;
+</code></pre>
+<p>刷新权限🙉。</p>
+<pre><code>flush privileges;
+</code></pre>
+<h4 id="设置可远程访问">设置可远程访问</h4>
+<p>Mysql默认不允许远程登录，所以我们这里要设置一下🌈：</p>
+<pre><code>grant all privileges on *.* to 'root'@'%' identified by 'Root123@' with grant option;
+</code></pre>
+<hr>
+<h3 id="拓展配置">拓展配置</h3>
+<h4 id="修改mysql字符集使其支持中文">修改MySQL字符集，使其支持中文🇨🇳</h4>
+<pre><code>#显示字符集变量
+show variables like '%character%';
+</code></pre>
+<figure data-type="image" tabindex="7"><img src="https://Yanoona.github.io/post-images/1582081808778.png" alt="" loading="lazy"></figure>
+<p>退出MySQL，编辑MySQL配置文件<strong>my.cnf</strong>，并在文件中添加👇👇行。文件路径在：<code>/etc/my.cnf</code>。</p>
+<pre><code>#在[mysqld]中添加
+character-set-server=utf8
+#在[client]中添加,没有此行请自己添加
+default-character-set=utf8
+#在[mysql]中添加,没有此行请自己添加
+default-character-set=utf8
+</code></pre>
+<p>保存后，再重启MySQL服务登录MySQL查看👀字符集是否全为utf8。</p>
+<figure data-type="image" tabindex="8"><img src="https://Yanoona.github.io/post-images/1582081817742.png" alt="" loading="lazy"></figure>
 ]]></content>
     </entry>
     <entry>
@@ -55,5 +501,20 @@
         <link href="https://Yanoona.github.io/JD2fNczzi/">
         </link>
         <updated>2020-02-18T07:55:17.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="网络异常">网络异常</h2>
+<h3 id="一-查看不到-ipv4-地址">一、查看不到 IPV4 地址</h3>
+<blockquote>
+<p>😉<strong>异常说明：使用<code>ip addr</code>命令查询 IP 地址时，找不到 IPV4 地址。查询结果如下图所示：</strong></p>
+</blockquote>
+<figure data-type="image" tabindex="1"><img src="https://Yanoona.github.io/post-images/1582012722489.png" alt="" loading="lazy"></figure>
+<p>🤓 <strong>解决方案：禁用NetworkManager</strong></p>
+<pre><code> #停止网络管理服务
+ systemctl stop NetworkManager
+ #禁止开机自启
+ systemctl disable NetworkManager
+ #重启网络服务
+ systemctl restart network
+</code></pre>
+]]></content>
     </entry>
 </feed>
