@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Yanoona.github.io</id>
     <title>姿势美如画( *・ω・)✄╰ひ╯</title>
-    <updated>2020-02-19T06:55:31.083Z</updated>
+    <updated>2020-02-19T07:39:19.342Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Yanoona.github.io"/>
     <link rel="self" href="https://Yanoona.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://Yanoona.github.io/images/avatar.png</logo>
     <icon>https://Yanoona.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 姿势美如画( *・ω・)✄╰ひ╯</rights>
+    <entry>
+        <title type="html"><![CDATA[Sqoop的安装和使用]]></title>
+        <id>https://Yanoona.github.io/vqAakgQmf/</id>
+        <link href="https://Yanoona.github.io/vqAakgQmf/">
+        </link>
+        <updated>2020-02-19T07:27:57.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Hadoop到Mysql的数据传输记录]]></title>
         <id>https://Yanoona.github.io/NNC7-_gM_/</id>

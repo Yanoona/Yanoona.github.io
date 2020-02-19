@@ -1,0 +1,556 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sqoop的安装和使用 | 姿势美如画( *・ω・)✄╰ひ╯</title>
+<meta name="description" content="大爷不进来看看吗？这里有好康的哦~~~" />
+<link rel="shortcut icon" href="https://Yanoona.github.io/favicon.ico">
+<link rel="stylesheet" href="https://Yanoona.github.io/styles/main.css">
+
+<script src="https://Yanoona.github.io/media/js/jquery.min.js"></script>
+<script src="https://Yanoona.github.io/media/js/masonry.pkgd.min.js"></script>
+<script src="https://Yanoona.github.io/media/js/aos.js"></script>
+<script src="https://Yanoona.github.io/media/js/pace.min.js"></script>
+<script src="https://Yanoona.github.io/media/js/view-image.min.js"></script>
+<script src="https://Yanoona.github.io/media/js/functions.js"></script>
+    <script src="https://Yanoona.github.io/media/js/waterfall.min.js"></script>
+    <script src="https://Yanoona.github.io/media/js/prism.min.js"></script>
+</head>
+<body>
+<header id="header" class="grid-container">
+    <!-- start: .menu-wrapper -->
+    <div class="menu-mobile">
+        <i class="fa fa-reorder"></i>
+    </div>
+    <div class="menu-wrapper">
+        <div class="">
+            <nav class="main-nav " >
+                <ul id="menu-header" class="menu gradient-effect">
+                    
+                        <li class="">
+                            <a href="https://Yanoona.github.io" class="menu">
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="https://Yanoona.github.io/archives" class="menu">
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="https://Yanoona.github.io/tags" class="menu">
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="https://github.com/Yanoona" class="menu">
+                                关于
+                            </a>
+                        </li>
+                    
+                </ul>
+            </nav>
+            <!-- end: .main-nav -->
+            <div class="clear"></div>
+            <div class="border hide-on-tablet hide-on-mobile"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <!-- end: .menu-wrapper -->
+    <div class="clear"></div>
+</header>
+
+<main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
+
+    <div class="center content">
+        <div class="featured-image cover"
+             style="background-image: url('https://Yanoona.github.io/post-images/vqAakgQmf.jpg');">
+            <div class="meta top">
+                <time class="meta-info" style="float:left;" datetime="2020-02-19"><i
+                            class="fa fa-calendar"></i><span
+                            class="lately">11 分钟前</span></time>
+            </div>
+            <div class="info">
+                <div class="tags ">
+                    
+                        <a href="https://Yanoona.github.io/bigData/" class="ctag ctag-0 ctag-bigData"
+                           aria-label="">大数据</a>
+                    
+                        <a href="https://Yanoona.github.io/Sqoop/" class="ctag ctag-1 ctag-Sqoop"
+                           aria-label="">Sqoop</a>
+                    
+                        <a href="https://Yanoona.github.io/Hive/" class="ctag ctag-2 ctag-Hive"
+                           aria-label="">Hive</a>
+                    
+                        <a href="https://Yanoona.github.io/mysql/" class="ctag ctag-3 ctag-mysql"
+                           aria-label="">mysql</a>
+                    
+                </div>
+                <h1 class="title ularge white bold">Sqoop的安装和使用</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="epcl-page-wrapper">
+        <div class="left-content grid-70 np-mobile">
+            <article class="main-article post">
+                <section class="post-content">
+                    <div class="text">
+                        <h2 id="概述">😀概述</h2>
+<ol>
+<li>
+<p>Sqoop 是 apache 旗下一款“Hadoop 和关系数据库服务器之间传送数据”的工具。</p>
+</li>
+<li>
+<p>核心的功能有两个：导入、导出</p>
+</li>
+<li>
+<p>本文档用于记录 Sqoop的安装和使用。</p>
+</li>
+</ol>
+<blockquote>
+<p>建议🗣<code>先配置好Hadoop的JobHistory节点</code>，以便于在Web中的Yarn界面查看MapReduce任务日志信息。</p>
+</blockquote>
+<h2 id="sqoop安装">😃Sqoop安装</h2>
+<h3 id="1前提概述">1.前提概述</h3>
+<blockquote>
+<ul>
+<li><strong>Sqoop就是一个工具， 只需要在一个节点上进行安装即可。</strong></li>
+</ul>
+<ul>
+<li><strong>你安装的Sqoop软件的节点一定要包含你要使用的集群或者软件系统的安装包</strong></li>
+</ul>
+</blockquote>
+<h3 id="2-软件下载">2. 软件下载</h3>
+<p>下载地址：⚡️<a href="http://mirrors.hust.edu.cn/apache/sqoop/">点击此处打开Sqoop下载链接</a>⚡️</p>
+<blockquote>
+<p>注意👇：</p>
+<ol>
+<li>
+<p>下载<code>sqoop-xx.bin__xx.tar.gz</code>的安装压缩包。</p>
+</li>
+<li>
+<p>Sqoop 1 和Sqoop 2不兼容，且绝大部分企业所使用的Sqoop的版本是 Sqoop 1。</p>
+<p>​	1.4.7版本的为Sqoop 1</p>
+<p>​	1.99.7版本的为Sqoop 2</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="安装">😄安装</h2>
+<h3 id="1创建sqoop安装目录">1.创建sqoop安装目录</h3>
+<pre><code>mkdir /usr/local/sqoop
+</code></pre>
+<h3 id="2解压安装包到指定目录">2.解压安装包到指定目录</h3>
+<p>上传☝️解压缩安装包到指定目录（此处跳过了Ftp传输步骤）。</p>
+<p>因为之前hive只是安装在hadoop1机器上，所以我这里Sqoop也同样安装在hadoop1机器上。👋</p>
+<pre><code>tar -zxvf sqoop-1.4.7.bin__hadoop-2.6.0.tar.gz /usr/local/sqoop
+</code></pre>
+<h3 id="3修改配置文件">3.修改配置文件</h3>
+<ol>
+<li>
+<p>进入到 conf 文件夹中，复制sqoop-env-template.sh，并将其修改为sqoop-env.sh</p>
+<pre><code>cp sqoop-env-template.sh sqoop-env.sh
+</code></pre>
+</li>
+<li>
+<p>修改sqoop-env.sh</p>
+<pre><code>vi sqoop-env.sh
+</code></pre>
+<pre><code>export HADOOP_MAPRED_HOME=/usr/local/hadoop/hadoop-2.9.2			#Hadoop的MapReduce安装路径
+export HADOOP_COMMON_HOME=/usr/local/hadoop/hadoop-2.9.2			#Hadoop的Common安装路径
+export HIVE_HOME=/usr/local/hive/hive							  #Hive安装路径
+</code></pre>
+<p>🙄为什么在sqoop-env.sh 文件中会要求分别进行 common和mapreduce的配置呢？？？</p>
+<blockquote>
+<p>🙋在apache的hadoop的安装中；四大组件都是安装在同一个hadoop_home中的</p>
+<p>🙋‍♂但是在CDH, HDP中， 这些组件都是可选的。</p>
+<p>🙋在安装hadoop的时候，可以选择性的只安装HDFS或者YARN，</p>
+<p>🙋‍♂CDH,HDP在安装hadoop的时候，会把HDFS和MapReduce有可能分别安装在不同的地方。</p>
+</blockquote>
+</li>
+<li>
+<p>将Mysql驱动包放到 lib 文件夹下</p>
+<pre><code>cp mysql-connector-java-5.1.48-bin.jar /usr/local/sqoop/sqoop-1.4.7/lib/
+</code></pre>
+</li>
+<li>
+<p>配置环境变量</p>
+<pre><code>vi /etc/profile
+</code></pre>
+<pre><code>#在末尾处添加以下行
+export SQOOP_HOME=/usr/local/sqoop/sqoop-1.4.7
+export PATH=${PATH}:${SQOOP_HOME}/bin
+</code></pre>
+<pre><code>#使文件生效
+source /etc/profile
+</code></pre>
+</li>
+<li>
+<p>验证是否安装成功👨‍🔧</p>
+<pre><code>sqoop version
+</code></pre>
+</li>
+</ol>
+<h2 id="sqoop的基本命令">😁Sqoop的基本命令</h2>
+<pre><code>#查看命令
+sqoop help
+
+#运行结果：
+usage: sqoop COMMAND [ARGS]
+
+Available commands:
+							#生成与数据库记录交互的代码
+  codegen            Generate code to interact with database records
+  							#将表定义导入到Hive中
+  create-hive-table  Import a table definition into Hive
+  							#计算一个SQL语句并显示结果，可以用来校验下import的查询条件是否正确。
+  eval               Evaluate a SQL statement and display the results
+  							#将HDFS目录导出到数据库表
+  export             Export an HDFS directory to a database table
+  							#可用命令列表
+  help               List available commands
+  							#将表从数据库导入到HDFS
+  import             Import a table from a database to HDFS
+  							#将所有表从数据库导入到HDFS
+  import-all-tables  Import tables from a database to HDFS
+  							#从大型机服务器导入数据集到HDFS
+  import-mainframe   Import datasets from a mainframe server to HDFS
+  							#将Import任务保存为job，可以理解为起了个别名，这样方便的Sqoop任务的管理。
+  job                Work with saved jobs
+  							#列出服务器上可用的数据库
+  list-databases     List available databases on a server
+  							#列出数据库上可用的b表
+  list-tables        List available tables in a database
+  							#增量导入的合并结果
+  merge              Merge results of incremental imports
+  							#运行一个独立的Sqoop metastore
+  metastore          Run a standalone Sqoop metastore
+  							#显示sqoop的版本
+  version            Display version information
+
+See 'sqoop help COMMAND' for information on a specific command.
+
+</code></pre>
+<h2 id="sqoop的基本使用">😆Sqoop的基本使用</h2>
+<blockquote>
+<p><strong>执行Sqoop命令时，请登录对hadoop有操作权限的系统用户🤴，否则会报没有权限等错误。</strong></p>
+<p>以下命令中出现的<code>\</code>为连接符，连接下一句命令，在实际操作中也可使用。</p>
+</blockquote>
+<hr>
+<h4 id="列出mysql中有哪些数据库">列出Mysql中有哪些数据库</h4>
+<pre><code>sqoop list-databases \
+-connect jdbc:mysql://localhost:3306/ \
+-username root \
+-password root
+</code></pre>
+<hr>
+<h4 id="列出mysql中指定数据库的表">列出Mysql中指定数据库的表</h4>
+<pre><code>sqoop list-tables \
+-connect jdbc:mysql://localhost:3306/sqoop_test \
+-username root \
+-password root
+</code></pre>
+<hr>
+<h4 id="创建一张跟sqoop_test库中user表结构一样的hive表hive_user">创建一张跟sqoop_test库中user表结构一样的hive表hive_user</h4>
+<blockquote>
+<p>此处需要将 hive 中的<code>hive-common-2.3.6.jar</code>包复制到 sqoop 的 lib 文件夹下，否则会报 <code>java.lang.ClassNotFoundException: org.apache.hadoop.hive.conf.HiveConf</code></p>
+</blockquote>
+<pre><code>sqoop create-hive-table \
+-connect jdbc:mysql://localhost:3306/sqoop_test \
+-username root \
+-password root \
+-table user \
+-hive-table hive_user					#要创建的hive表名
+</code></pre>
+<p>创建完后可登录hive查看，以下为所执行的命令：</p>
+<pre><code>hive												#登录Hive
+show databases;								#查看数据库
+use default;									#选择数据库,由于上面没有指定数据库，所以在默认数据库中创建了表
+show tables;									#列出Default数据库中的所有表
+</code></pre>
+<hr>
+<h4 id="mysqlhdfs从mysql导入到hdfs">Mysql→HDFS：从Mysql导入到HDFS</h4>
+<pre><code>sqoop import \
+-connect jdbc:mysql://{数据库IP}:3306/{数据库}?autoReconnect=true \		  #数据库连接
+-driver com.mysql.jdbc.Driver	\														#数据库驱动
+-username root	\																			#数据库用户名
+-password root	\																			#数据库密码
+-table user	\																				#数据库表
+-target-dir	/user/admin/temp/sqoop-import	\										#导入到HDFS的目标目录
+-fields-terminated-by ','	\															#按什么分隔
+-m 1																							#MapReduce执行任务数
+</code></pre>
+<p>拓展命令（在导出中同样适用）：</p>
+<pre><code>-where &quot;name = 'ZhangSan'&quot;																#带Where条件导入
+-columns &quot;name&quot; 																			#导入指定列
+#自定义Sql查询，导入查询后数据
+-query 'select * from mysql.help_keyword where $CONDITIONS and name = &quot;STRING&quot;' 				
+-split-by ‘id’																				#主键
+-incremental  append  																	#增量导入
+</code></pre>
+<blockquote>
+<p>在需要按照自定义SQL语句导出数据到HDFS的情况下👇👇：</p>
+<ul>
+<li>引号问题，要么外层使用单引号，内层使用双引号，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mi>O</mi><mi>N</mi><mi>D</mi><mi>I</mi><mi>T</mi><mi>I</mi><mi>O</mi><mi>N</mi><mi>S</mi><mi mathvariant="normal">的</mi></mrow><annotation encoding="application/x-tex">CONDITIONS的</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord cjk_fallback">的</span></span></span></span>符号不用转义， 要么外层使用双引号，那么内层使用单引号，然后<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mi>O</mi><mi>N</mi><mi>D</mi><mi>I</mi><mi>T</mi><mi>I</mi><mi>O</mi><mi>N</mi><mi>S</mi><mi mathvariant="normal">的</mi></mrow><annotation encoding="application/x-tex">CONDITIONS的</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord cjk_fallback">的</span></span></span></span>符号需要转义。</li>
+<li>自定义的SQL语句中必须带有WHERE $CONDITIONS</li>
+</ul>
+</blockquote>
+<hr>
+<h4 id="hdfsmysql从hdfs中导出到mysql">HDFS→Mysql：从HDFS中导出到Mysql</h4>
+<pre><code>sqoop export \
+-connect jdbc:mysql://{数据库IP}:3306/{数据库}?autoReconnect=true \			 #数据库连接
+-driver com.mysql.jdbc.Driver	\															#数据库驱动
+-username root	\																				#数据库用户名
+-password root	\																				#数据库密码
+-table sqoop_test	\																			#数据库表
+-export-dir	/user/admin/temp/sqoop-import	\											#导出HDFS的目标目录到Mysql
+-fields-terminated-by ','	\																#按什么分隔
+-split-by id	\																				#主键
+-m 1																								#MapReduce执行任务数
+</code></pre>
+<blockquote>
+<p>👨‍🏫记录问题👩‍🏫：</p>
+<ul>
+<li>若⭐️数据库连接或密码带上了 <code>$</code> 符号⭐️，则会导致后面语法报<strong>未找到命令错误</strong>；</li>
+<li>有时需带上 <code>-driver</code>命令，否则<strong>有可能会</strong>导致出现数据库连接失败错误；</li>
+<li>如果Mysql为8.0的版本，需要更改为8.0驱动包：<code>com.mysql.cj.jdbc.Driver</code></li>
+<li>执行命令时必须带上<code>-split-by</code>或者<code>-m 1</code>命令，否则会报错；</li>
+<li><code>-fields-terminated-by</code>命令表示 <strong>数据库中的列在导入文本中按照什么字符分隔</strong>，如上面例子中的 <strong>，</strong>;</li>
+</ul>
+</blockquote>
+<hr>
+<h4 id="mysqlhive从mysql导入到hive中">Mysql→Hive：从Mysql导入到Hive中</h4>
+<blockquote>
+<p><strong>导入过程：先导入到 hdfs，然后再 load 进入 hive😊</strong></p>
+<p><strong>普通导入：数据存储在Hive默认的default库中，表名就是对应的mysql的表名：😜</strong></p>
+</blockquote>
+<pre><code>sqoop import   \
+--connect jdbc:mysql://localhost:3306/sqoop_test   \			#数据库连接
+--username root  \														#数据库用户名
+--password root   \														#数据库密码
+--table user   \															#数据库表
+--hive-import \															#导入路径
+-m 1																			#任务并发数
+</code></pre>
+<p>查看 Hive 中的数据</p>
+<pre><code>hadoop fs -cat /user/hive/warehouse/user/part-m-00000			#user就是表名
+</code></pre>
+<p>拓展命令：</p>
+<pre><code>-fields-terminated-by &quot;，&quot;  									#数据按什么分隔
+-lines-terminated-by &quot;\n&quot;  									#行数按什么分隔
+-hive-overwrite 													#指定覆盖导入
+-create-hive-table  												#指定自动创建hive表
+-delete-target-dir 												#指定删除中间结果数据目录
+-hive-database  mydb_test 										#指定Hive数据库
+-hive-table new_user												#指定表名
+-incremental  append  											#增量导入
+</code></pre>
+<blockquote>
+<p>当指定Hive数据库时，必须先创建该数据库，否则会报<code>Database does not exist: xx</code>数据库不存在🌈。</p>
+<p>⚡️**从Hive导出到Mysql的步骤 和 从HDFS导出到Mysql的步骤 一致。**⚡️</p>
+</blockquote>
+
+                    </div>
+                    <div class="clear"></div>
+                </section>
+            </article>
+            <div class="clear"></div>
+
+            <section class="related section">
+                
+                
+                    <article class="next grid-50 tablet-grid-50 grid-parent">
+                        <div class="thumb cover lazy loaded"
+                             style="background-image: url('https://Yanoona.github.io/post-images/NNC7-_gM_.jpg');"></div>
+                        <a href="https://Yanoona.github.io/NNC7-_gM_/" class="full-link"></a>
+                        <div class="info">
+                            <time datetime="2020-02-19">2020-02-19</time>
+                            <h4 class="title white no-margin">Hadoop到Mysql的数据传输记录</h4>
+                        </div>
+                        <span class="epcl-button red">
+                  <img src="https://Yanoona.github.io/media/images/right-arrow.svg" width="15" alt="Left Arrow">
+                </span>
+                        <div class="overlay"></div>
+                    </article>
+                
+
+                <div class="clear"></div>
+            </section>
+        </div>
+    </div>
+</main>
+
+    <footer id="footer" class="grid-container">
+        <div class="widgets row gradient-effect">
+            <div class="default-sidebar border-effect">
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="tag_cloud-2" class="widget widget_epcl_posts_thumbs underline-effect">
+                  <h4 class="widget-title title white bordered">最新文章</h4>
+                  
+                  
+                  <article class="item post-0 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://Yanoona.github.io/vqAakgQmf/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display: block;background-image: url('https://Yanoona.github.io/post-images/vqAakgQmf.jpg');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-02-19">2020-02-19</time>
+                      <h4 class="title usmall">
+                        <a href="https://Yanoona.github.io/vqAakgQmf/">Sqoop的安装和使用</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  <article class="item post-1 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://Yanoona.github.io/NNC7-_gM_/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display: block;background-image: url('https://Yanoona.github.io/post-images/NNC7-_gM_.jpg');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-02-19">2020-02-19</time>
+                      <h4 class="title usmall">
+                        <a href="https://Yanoona.github.io/NNC7-_gM_/">Hadoop到Mysql的数据传输记录</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  <article class="item post-2 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://Yanoona.github.io/TeSMMvZK8/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display: block;background-image: url('https://Yanoona.github.io/post-images/TeSMMvZK8.jpg');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-02-19">2020-02-19</time>
+                      <h4 class="title usmall">
+                        <a href="https://Yanoona.github.io/TeSMMvZK8/">CentOS 7安装和卸载MySql</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  
+                  <div class="clear"></div>
+                </section>
+              </div>
+
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="tag_cloud-2" class="widget widget_tag_cloud underline-effect">
+                  <h4 class="widget-title title white bordered">标签云</h4>
+                  <div class="tagcloud">
+                    
+                      <a href="https://Yanoona.github.io/bigData/" class="ctag ctag-0 ctag-bigData" aria-label="">大数据</a>
+                    
+                      <a href="https://Yanoona.github.io/Sqoop/" class="ctag ctag-1 ctag-Sqoop" aria-label="">Sqoop</a>
+                    
+                      <a href="https://Yanoona.github.io/Hive/" class="ctag ctag-2 ctag-Hive" aria-label="">Hive</a>
+                    
+                      <a href="https://Yanoona.github.io/mysql/" class="ctag ctag-3 ctag-mysql" aria-label="">mysql</a>
+                    
+                      <a href="https://Yanoona.github.io/Hadoop/" class="ctag ctag-4 ctag-Hadoop" aria-label="">Hadoop</a>
+                    
+                      <a href="https://Yanoona.github.io/j_dWapwnj/" class="ctag ctag-5 ctag-j_dWapwnj" aria-label="">CentOS 7</a>
+                    
+                  </div>
+                  <div class="clear"></div>
+                </section>
+              </div>
+
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="epcl_about-2" class="widget widget_epcl_about underline-effect">
+                  <h4 class="widget-title title white bordered">关于我</h4>
+                  <div class="avatar">
+                    <a href="https://github.com/Yanoona" class="translate-effect thumb"><span class="fullimage cover" style="background-image: url(https://Yanoona.github.io/images/avatar.png);"></span></a>
+                  </div>
+                  <div class="info">
+                    <h4 class="title small author-name gradient-effect no-margin"><a href="https://github.com/Yanoona">姿势美如画( *・ω・)✄╰ひ╯</a></h4>
+                    <p class="founder">大爷不进来看看吗？这里有好康的哦~~~</p>
+                    <div class="social">
+                      
+                        
+                            <a href="https://github.com/Yanoona" class="translate-effect" target="_blank"><i class="fa fa-github"></i></a>
+                        
+                      
+                        
+                      
+                        
+                      
+                        
+                      
+                        
+                      
+                    </div>
+                  </div>
+                  <div class="clear"></div>
+                  </section>
+              </div>
+
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <p class="published border-effect">
+          ©2020 共 4 篇文章
+        </p>
+        
+        <a href="javascript:void(0)" id="back-to-top" class="epcl-button dark" style="display:none">
+          <i class="fa fa-arrow"></i>
+        </a>
+    </footer>
+    <div class="clear"></div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $("photos img").each(function () {
+            var _a = $("<a></a>").attr("href", this.src);
+            $(this).wrap("<div class='photo'></div>").wrap(_a);
+        })
+        $("figure img").each(function () {
+            var _b = $("<a></a>").attr("href", this.src);
+            $(this).wrap(_b);
+        })
+        isImgLoad(function () {
+            var photos = document.querySelector('photos');
+            if (photos) {
+                waterfall(photos);
+            }
+            $(window).resize(function () {
+                if (photos) {
+                    waterfall(photos);
+                }
+            });
+        });
+        var t_img;
+        var isLoad = true;
+
+        function isImgLoad(callback) {
+            $('photos img').each(function () {
+                if (this.height === 0) {
+                    isLoad = false;
+                    return false;
+                }
+            });
+            if (isLoad) {
+                clearTimeout(t_img);
+                callback();
+            } else {
+                isLoad = true;
+                t_img = setTimeout(function () {
+                    isImgLoad(callback);
+                }, 500);
+            }
+        }
+    });
+</script>
+
+</div>
+<!-- end: #wrapper -->
+</body>
+</html>
