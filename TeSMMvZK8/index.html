@@ -2,7 +2,7 @@
 <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CentOS 7 中所遇见的异常 | Gridea</title>
+<title>CentOS 7安装和卸载MySql | Gridea</title>
 <meta name="description" content="大爷不进来看看吗？这里有好康的哦~~~" />
 <link rel="shortcut icon" href="https://Yanoona.github.io/favicon.ico">
 <link rel="stylesheet" href="https://Yanoona.github.io/styles/main.css">
@@ -67,20 +67,23 @@
 
     <div class="center content">
         <div class="featured-image cover"
-             style="background-image: url('https://Yanoona.github.io/post-images/JD2fNczzi.jpg');">
+             style="background-image: url('https://Yanoona.github.io/post-images/TeSMMvZK8.jpg');">
             <div class="meta top">
-                <time class="meta-info" style="float:left;" datetime="2020-02-18"><i
+                <time class="meta-info" style="float:left;" datetime="2020-02-19"><i
                             class="fa fa-calendar"></i><span
-                            class="lately">19 小时前</span></time>
+                            class="lately">21 分钟前</span></time>
             </div>
             <div class="info">
                 <div class="tags ">
                     
-                        <a href="https://Yanoona.github.io/j_dWapwnj/" class="ctag ctag-0 ctag-j_dWapwnj"
+                        <a href="https://Yanoona.github.io/mysql/" class="ctag ctag-0 ctag-mysql"
+                           aria-label="">mysql</a>
+                    
+                        <a href="https://Yanoona.github.io/j_dWapwnj/" class="ctag ctag-1 ctag-j_dWapwnj"
                            aria-label="">CentOS 7</a>
                     
                 </div>
-                <h1 class="title ularge white bold">CentOS 7 中所遇见的异常</h1>
+                <h1 class="title ularge white bold">CentOS 7安装和卸载MySql</h1>
             </div>
         </div>
     </div>
@@ -90,20 +93,117 @@
             <article class="main-article post">
                 <section class="post-content">
                     <div class="text">
-                        <h2 id="网络异常">网络异常</h2>
-<h3 id="一-查看不到-ipv4-地址">一、查看不到 IPV4 地址</h3>
-<blockquote>
-<p><strong>😉异常说明：使用<code>ip addr</code>命令查询 IP 地址时，找不到 IPV4 地址。查询结果如下图所示：</strong></p>
-</blockquote>
-<figure data-type="image" tabindex="1"><img src="https://Yanoona.github.io/post-images/1582012722489.png" alt="" loading="lazy"></figure>
-<p>🤓 <strong>解决方案：禁用NetworkManager</strong></p>
-<pre><code> #停止网络管理服务
- systemctl stop NetworkManager
- #禁止开机自启
- systemctl disable NetworkManager
- #重启网络服务
- systemctl restart network
+                        <h2 id="概述">😀概述</h2>
+<p>记录一次CentOS7安装Mysql5.7的步骤和卸载Mysql的步骤。</p>
+<h2 id="环境说明">😃环境说明</h2>
+<p>机器系统版本：CentOS7.9<br>
+所安装Mysql版本：MySql5.7</p>
+<h2 id="准备安装">😄准备安装</h2>
+<p>确保机器上已安装<code>wget</code>,如果没有安装过就使用以下命令进行安装。</p>
+<pre><code>yum -y install wget
 </code></pre>
+<h2 id="开始安装">😁开始安装</h2>
+<h3 id="进入官网复制yum源">进入官网复制yum源</h3>
+<figure data-type="image" tabindex="1"><img src="https://Yanoona.github.io/post-images/1582081400516.png" alt="" loading="lazy"></figure>
+<p>直接点开这个地址并选择第二个（<strong>第一个里面没有MySql5.7版本的下载</strong>）⚡️：<a href="https://dev.mysql.com/downloads/repo/yum/">https://dev.mysql.com/downloads/repo/yum/</a>⚡️</p>
+<p>点进去之后，右击超链接文字<strong>No thanks, just start my download.</strong>，再点击<strong>复制链接地址</strong>即可。如下图所示：<br>
+<img src="https://Yanoona.github.io/post-images/1582081448581.png" alt="" loading="lazy"></p>
+<hr>
+<h3 id="下载和安装yum源">下载和安装yum源</h3>
+<p>在服务器上运行下载命令👇：</p>
+<pre><code>wget https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
+</code></pre>
+<p>运行后继续输入以下命令：</p>
+<pre><code>rpm -ivh mysql80-community-release-el7-3.noarch.rpm
+</code></pre>
+<hr>
+<h3 id="修改yum源默认安装的版本">修改yum源默认安装的版本</h3>
+<p>👴运行查看可安装的mysql的命令：</p>
+<pre><code>yum repolist all| grep mysql
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://Yanoona.github.io/post-images/1582081748024.png" alt="" loading="lazy"></figure>
+<p>可以看出默认是启用的mysql8.0，5.7是关闭的。</p>
+<p>接着运行修改yum配置⚡️（enabled=1 想要安装哪个版本就在哪个版本的后面把0换成1，因为默认是最新版，所以需要把最新版的1换成0，5.7的换为1）⚡️命令：</p>
+<pre><code>vim /etc/yum.repos.d/mysql-community.repo
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://Yanoona.github.io/post-images/1582081761005.png" alt="" loading="lazy"></figure>
+<p>修改完成后再运行以下命令查看是否已经生效：</p>
+<pre><code>yum repolist all| grep mysql
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="https://Yanoona.github.io/post-images/1582081772383.png" alt="" loading="lazy"></figure>
+<p>可以看到配置文件已经生效，接下来使用yum安装MySql。</p>
+<hr>
+<h3 id="使用yum安装mysql">使用yum安装MySql</h3>
+<p>运行安装命令👇：</p>
+<pre><code>yum install -y mysql-community-server
+</code></pre>
+<figure data-type="image" tabindex="5"><img src="https://Yanoona.github.io/post-images/1582081783832.png" alt="" loading="lazy"></figure>
+<p><strong>等待安装完成即可！👀</strong></p>
+<h2 id="mysql配置">😆MySQL配置</h2>
+<h3 id="初始配置">初始配置</h3>
+<h4 id="启动mysql服务">🤔启动MySQL服务</h4>
+<pre><code>#启动
+systemctl start mysqld
+#查看状态
+systemctl status mysqld
+#设置开机自启
+systemctl enable mysqld
+</code></pre>
+<h4 id="查看mysql的初始密码">👀查看MySQL的初始密码</h4>
+<blockquote>
+<p>初始密码只有在第一次安装或者完全卸载后安装才会有。</p>
+</blockquote>
+<pre><code>grep 'password' /var/log/mysqld.log
+</code></pre>
+<figure data-type="image" tabindex="6"><img src="https://Yanoona.github.io/post-images/1582081794593.png" alt="" loading="lazy"></figure>
+<p>其中的👉<code>.trj4redlL!</code>👈为初始密码，使用其登录MySQL即可。</p>
+<h4 id="修改初始密码">修改初始密码</h4>
+<blockquote>
+<p>注意：MySQL5.7默认密码策略要求密码⭐️必须是<strong>大小写字母数字特殊字母</strong>的组合⭐️，至少8位</p>
+</blockquote>
+<pre><code>#修改密码
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'Root123@';
+</code></pre>
+<h4 id="设置简单密码">设置简单密码</h4>
+<p>修改MySQL密码策略，并设置简单密码进行访问🙈🙈。</p>
+<pre><code>#查看MySQL密码策略
+show variables like 'validate_password%';
+#设置全局验证密码策略
+set global validate_password_policy=low;
+#设置全局验证密码混合情况计数
+set global validate_password_mixed_case_count=0;
+#设置全局验证密码特殊的字符计数
+set global validate_password_special_char_count=0;
+#设置全集验证密码长度
+set global validate_password_length=4;
+</code></pre>
+<p>赋予用户权限（设置可远程访问🤖）。</p>
+<pre><code>grant all privileges on *.* to 'root'@'%' identified by 'root' with grant option;
+</code></pre>
+<p>刷新权限🙉。</p>
+<pre><code>flush privileges;
+</code></pre>
+<h4 id="设置可远程访问">设置可远程访问</h4>
+<p>Mysql默认不允许远程登录，所以我们这里要设置一下🌈：</p>
+<pre><code>grant all privileges on *.* to 'root'@'%' identified by 'Root123@' with grant option;
+</code></pre>
+<hr>
+<h3 id="拓展配置">拓展配置</h3>
+<h4 id="修改mysql字符集使其支持中文">修改MySQL字符集，使其支持中文🇨🇳</h4>
+<pre><code>#显示字符集变量
+show variables like '%character%';
+</code></pre>
+<figure data-type="image" tabindex="7"><img src="https://Yanoona.github.io/post-images/1582081808778.png" alt="" loading="lazy"></figure>
+<p>退出MySQL，编辑MySQL配置文件<strong>my.cnf</strong>，并在文件中添加👇👇行。文件路径在：<code>/etc/my.cnf</code>。</p>
+<pre><code>#在[mysqld]中添加
+character-set-server=utf8
+#在[client]中添加,没有此行请自己添加
+default-character-set=utf8
+#在[mysql]中添加,没有此行请自己添加
+default-character-set=utf8
+</code></pre>
+<p>保存后，再重启MySQL服务登录MySQL查看👀字符集是否全为utf8。</p>
+<figure data-type="image" tabindex="8"><img src="https://Yanoona.github.io/post-images/1582081817742.png" alt="" loading="lazy"></figure>
 
                     </div>
                     <div class="clear"></div>
@@ -113,20 +213,20 @@
 
             <section class="related section">
                 
-                    <article class="prev grid-50 tablet-grid-50 grid-parent">
+                
+                    <article class="next grid-50 tablet-grid-50 grid-parent">
                         <div class="thumb cover lazy loaded"
-                             style="background-image: url('https://Yanoona.github.io/post-images/TeSMMvZK8.jpg');"></div>
-                        <a href="https://Yanoona.github.io/TeSMMvZK8/" class="full-link"></a>
+                             style="background-image: url('https://Yanoona.github.io/post-images/JD2fNczzi.jpg');"></div>
+                        <a href="https://Yanoona.github.io/JD2fNczzi/" class="full-link"></a>
                         <div class="info">
-                            <time datetime="2020-02-19">2020-02-19</time>
-                            <h4 class="title white no-margin">CentOS 7安装和卸载MySql</h4>
+                            <time datetime="2020-02-18">2020-02-18</time>
+                            <h4 class="title white no-margin">CentOS 7 中所遇见的异常</h4>
                         </div>
                         <span class="epcl-button red">
-                  <img src="https://Yanoona.github.io/media/images/left-arrow.svg" width="15" alt="Left Arrow">
+                  <img src="https://Yanoona.github.io/media/images/right-arrow.svg" width="15" alt="Left Arrow">
                 </span>
                         <div class="overlay"></div>
                     </article>
-                
                 
 
                 <div class="clear"></div>
