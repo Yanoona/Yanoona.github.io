@@ -3201,10 +3201,10 @@ section.widget_epcl_tweets p:last-of-type {
 .widget_epcl_social div.icons a.vk:hover {
   background: #36506f;
 }
-.widget_epcl_social div.icons a.telegram {
+.widget_epcl_social div.icons a.csdn {
   background: #0088cc;
 }
-.widget_epcl_social div.icons a.telegram:hover {
+.widget_epcl_social div.icons a.csdn:hover {
   background: #00699e;
 }
 .widget_epcl_social div.icons a.rss {
@@ -5468,7 +5468,7 @@ div.epcl-share a.pinterest {
 div.epcl-share a.linkedin {
   color: #0077b5 !important;
 }
-div.epcl-share a.telegram {
+div.epcl-share a.csdn {
   color: #0088cc !important;
 }
 div.epcl-share a.vk {
@@ -5729,7 +5729,7 @@ div.epcl-share a.vk {
 #single .share-buttons .epcl-button.linkedin {
   background: #0077b5 !important;
 }
-#single .share-buttons .epcl-button.telegram {
+#single .share-buttons .epcl-button.csdn {
   background: #0088cc !important;
 }
 #single .share-buttons .epcl-button.vk {
@@ -8370,13 +8370,13 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
 .fa-comment:before {
   content: "\eafc";
 }
-.fa-telegram:before {
+.fa-csdn:before {
   content: "\ef06";
 }
-.fa-leancloud:before {
+.fa-jianshu:before {
   content: "\ec55";
 }
-.fa-feed:before {
+.fa-jianshu:before {
   content: "\eaf4";
 }
 .fa-chevron-left:before {
