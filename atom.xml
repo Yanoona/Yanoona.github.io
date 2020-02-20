@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Yanoona.github.io</id>
     <title>姿势美如画( *・ω・)✄╰ひ╯</title>
-    <updated>2020-02-20T01:11:24.313Z</updated>
+    <updated>2020-02-20T01:49:45.271Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Yanoona.github.io"/>
     <link rel="self" href="https://Yanoona.github.io/atom.xml"/>
@@ -10,6 +10,149 @@
     <logo>https://Yanoona.github.io/images/avatar.png</logo>
     <icon>https://Yanoona.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 姿势美如画( *・ω・)✄╰ひ╯</rights>
+    <entry>
+        <title type="html"><![CDATA[使用axios出现的跨域问题]]></title>
+        <id>https://Yanoona.github.io/zxJ0ci4F1/</id>
+        <link href="https://Yanoona.github.io/zxJ0ci4F1/">
+        </link>
+        <updated>2020-02-20T01:46:38.000Z</updated>
+        <summary type="html"><![CDATA[<h3 id="前言">前言</h3>
+<blockquote>
+<p>最近在使用SpringBoot和Vue进行前后端分离开发😊，且测试功能时，出现了此异常😕：<br>
+<code>CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.</code></p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<h3 id="前言">前言</h3>
+<blockquote>
+<p>最近在使用SpringBoot和Vue进行前后端分离开发😊，且测试功能时，出现了此异常😕：<br>
+<code>CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.</code></p>
+</blockquote>
+<!-- more -->
+<blockquote>
+<p>通过查看👀相关资料后发现是由于CORS跨越问题造成的，得知解决办法无非有两种方式：<strong>响应头添加参数和添加过滤器。</strong></p>
+</blockquote>
+<h3 id="什么是cors">什么是CORS</h3>
+<blockquote>
+<p>CORS，常被大家称之为跨越问题，准确的叫法是<strong>跨域资源共享（CORS，Cross-origin resource sharing）</strong>，是W3C标准，是一种机制，它使用额外的HTTP头来告诉浏览器 让运行在一个 origin (domain) 上的Web应用被准许访问来自不同源服务器上的指定的资源。☄当一个资源从与该资源本身所在的服务器不同的域或端口请求一个资源时，资源会发起一个跨域 HTTP 请求。</p>
+</blockquote>
+<h3 id="解决办法">解决办法👨‍🔧</h3>
+<ul>
+<li><strong>🚶‍♀使用过滤器</strong></li>
+</ul>
+<pre><code>@Configuration
+public class AccessControlAllowOriginFilter extends WebMvcConfigurerAdapter {
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping(&quot;/*/**&quot;)
+                .allowedOrigins(&quot;http://localhost:8080&quot;)
+                .allowedMethods(&quot;GET&quot;, &quot;POST&quot;,&quot;UPDATE&quot;,&quot;DELETE&quot;)
+                .allowCredentials(false).maxAge(3600);
+    }
+}
+</code></pre>
+<ul>
+<li><strong>👫在需要的地方添加<code>CrossOrigin</code>注解</strong></li>
+</ul>
+<pre><code>@CrossOrigin(origins = &quot;http://192.168.1.97:8080&quot;, maxAge = 3600)
+@RequestMapping(&quot;rest_index&quot;)
+@RestController
+public class IndexController{
+</code></pre>
+<ul>
+<li><strong>👪添加响应头</strong></li>
+</ul>
+<blockquote>
+<p>在被请求资源中添加响应头信息&quot;Access-Control-Allow-Origin：*</p>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Axios远程接口链接时，报404]]></title>
+        <id>https://Yanoona.github.io/VOrX9Qjkt/</id>
+        <link href="https://Yanoona.github.io/VOrX9Qjkt/">
+        </link>
+        <updated>2020-02-20T01:40:20.000Z</updated>
+        <summary type="html"><![CDATA[<h3 id="前言">前言</h3>
+<blockquote>
+<p>刚刚在项目中使用Axios远程调用后端接口时，出现以下异常😫😫：<br>
+<code>Uncaught (in promise) Error: Request failed with status code 404</code></p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<h3 id="前言">前言</h3>
+<blockquote>
+<p>刚刚在项目中使用Axios远程调用后端接口时，出现以下异常😫😫：<br>
+<code>Uncaught (in promise) Error: Request failed with status code 404</code></p>
+</blockquote>
+<!-- more -->
+<h3 id="解决方法">解决方法</h3>
+<p>将项目中的原Axios方法改造👨‍🔧如以下代码所示👇：<br>
+<strong>改造前：</strong></p>
+<pre><code> axios.post({
+          url: &quot;这里是请求的的URL&quot;,
+          timeout: 10000,
+          //不带Cokkie
+          withCredentials: false,
+          headers: {
+            &quot;Content-Type&quot;: &quot;application/x-www-form-urlencoded&quot;
+          },
+          data: {
+            &quot;userName&quot;: this.username,
+            &quot;passWord&quot;: this.password
+          }
+        }).then((res) =&gt; {
+          console.log(res);
+          if (res.data.status == 0) {
+            this.$Message.info(&quot;得到信息&quot;);
+          } else {
+            this.$Message.warning(&quot;未得到信息&quot;);
+          }
+        })
+</code></pre>
+<p><strong>改造后：</strong></p>
+<pre><code>var instance = axios.create({headers: {'content-type': 'application/x-www-form-urlencoded'}});
+        instance.post(`这里是请求的的URL`, params).then((res) =&gt; {
+          console.log(res);
+        });
+</code></pre>
+<p>修改完后就可以成功链接了👏。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[使用Iview手脚架搭建项目异常]]></title>
+        <id>https://Yanoona.github.io/Y72Yd1hiG/</id>
+        <link href="https://Yanoona.github.io/Y72Yd1hiG/">
+        </link>
+        <updated>2020-02-20T01:37:08.000Z</updated>
+        <summary type="html"><![CDATA[<h4 id="出现异常">出现异常</h4>
+<blockquote>
+<p>刚刚在使用iview手脚架搭建项目完成后，想着尝试启动项目看看，结果控制台报出了<code>TypeError [ERR_INVALID_CALLBACK]: Callback must be a function</code>异常😟。</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<h4 id="出现异常">出现异常</h4>
+<blockquote>
+<p>刚刚在使用iview手脚架搭建项目完成后，想着尝试启动项目看看，结果控制台报出了<code>TypeError [ERR_INVALID_CALLBACK]: Callback must be a function</code>异常😟。</p>
+</blockquote>
+<!-- more -->
+<pre><code>TypeError [ERR_INVALID_CALLBACK]: Callback must be a function
+    at maybeCallback (fs.js:128:9)
+    at Object.write (fs.js:535:14)
+    at G:\iviewEnd\webpack.prod.config.js:10:8
+    at FSReqWrap.args [as oncomplete] (fs.js:140:20)
+</code></pre>
+<h4 id="解决异常">解决异常</h4>
+<blockquote>
+<p>在异常错误中定位到所发现异常的路径😃，如我这里的 <strong><code>G:\iviewEnd\webpack.prod.config.js:10:8</code></strong></p>
+</blockquote>
+<pre><code>fs.open('./src/config/env.js', 'w', function (err, fd) {
+    const buf = 'export default &quot;production&quot;;';
+    //fs.write(fd, buf, 0, buf.length, 0, function (err, written, buffer){});
+    //将上面这一行修改为
+    fs.write(fd, buf, 0, 'utf-8', function(err, written, buffer) {});
+});
+</code></pre>
+<p>保存再次运行 <strong>npm run dev</strong> 即可启动项目👏。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Sqoop的安装和使用]]></title>
         <id>https://Yanoona.github.io/vqAakgQmf/</id>

@@ -2,7 +2,7 @@
 <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CentOS 7 中所遇见的异常 | 姿势美如画( *・ω・)✄╰ひ╯</title>
+<title>Axios远程接口链接时，报404 | 姿势美如画( *・ω・)✄╰ひ╯</title>
 <meta name="description" content="大爷不进来看看吗？这里有好康的哦~~~" />
 <link rel="shortcut icon" href="https://Yanoona.github.io/favicon.ico">
 <link rel="stylesheet" href="https://Yanoona.github.io/styles/main.css">
@@ -67,20 +67,20 @@
 
     <div class="center content">
         <div class="featured-image cover"
-             style="background-image: url('https://Yanoona.github.io/post-images/JD2fNczzi.jpg');">
+             style="background-image: url('https://Yanoona.github.io/post-images/VOrX9Qjkt.jpg');">
             <div class="meta top">
-                <time class="meta-info" style="float:left;" datetime="2020-02-18"><i
+                <time class="meta-info" style="float:left;" datetime="2020-02-20"><i
                             class="fa fa-calendar"></i><span
-                            class="lately">2 天前</span></time>
+                            class="lately">9 分钟前</span></time>
             </div>
             <div class="info">
                 <div class="tags ">
                     
-                        <a href="https://Yanoona.github.io/j_dWapwnj/" class="ctag ctag-0 ctag-j_dWapwnj"
-                           aria-label="">CentOS 7</a>
+                        <a href="https://Yanoona.github.io/dXBZlTYs0/" class="ctag ctag-0 ctag-dXBZlTYs0"
+                           aria-label="">Vue</a>
                     
                 </div>
-                <h1 class="title ularge white bold">CentOS 7 中所遇见的异常</h1>
+                <h1 class="title ularge white bold">Axios远程接口链接时，报404</h1>
             </div>
         </div>
     </div>
@@ -90,20 +90,43 @@
             <article class="main-article post">
                 <section class="post-content">
                     <div class="text">
-                        <h2 id="网络异常">网络异常</h2>
-<h3 id="一-查看不到-ipv4-地址">一、查看不到 IPV4 地址</h3>
+                        <h3 id="前言">前言</h3>
 <blockquote>
-<p>😉<strong>异常说明：使用<code>ip addr</code>命令查询 IP 地址时，找不到 IPV4 地址。查询结果如下图所示：</strong></p>
+<p>刚刚在项目中使用Axios远程调用后端接口时，出现以下异常😫😫：<br>
+<code>Uncaught (in promise) Error: Request failed with status code 404</code></p>
 </blockquote>
-<figure data-type="image" tabindex="1"><img src="https://Yanoona.github.io/post-images/1582012722489.png" alt="" loading="lazy"></figure>
-<p>🤓 <strong>解决方案：禁用NetworkManager</strong></p>
-<pre><code> #停止网络管理服务
- systemctl stop NetworkManager
- #禁止开机自启
- systemctl disable NetworkManager
- #重启网络服务
- systemctl restart network
+<!-- more -->
+<h3 id="解决方法">解决方法</h3>
+<p>将项目中的原Axios方法改造👨‍🔧如以下代码所示👇：<br>
+<strong>改造前：</strong></p>
+<pre><code> axios.post({
+          url: &quot;这里是请求的的URL&quot;,
+          timeout: 10000,
+          //不带Cokkie
+          withCredentials: false,
+          headers: {
+            &quot;Content-Type&quot;: &quot;application/x-www-form-urlencoded&quot;
+          },
+          data: {
+            &quot;userName&quot;: this.username,
+            &quot;passWord&quot;: this.password
+          }
+        }).then((res) =&gt; {
+          console.log(res);
+          if (res.data.status == 0) {
+            this.$Message.info(&quot;得到信息&quot;);
+          } else {
+            this.$Message.warning(&quot;未得到信息&quot;);
+          }
+        })
 </code></pre>
+<p><strong>改造后：</strong></p>
+<pre><code>var instance = axios.create({headers: {'content-type': 'application/x-www-form-urlencoded'}});
+        instance.post(`这里是请求的的URL`, params).then((res) =&gt; {
+          console.log(res);
+        });
+</code></pre>
+<p>修改完后就可以成功链接了👏。</p>
 
                     </div>
                     <div class="clear"></div>
@@ -115,11 +138,11 @@
                 
                     <article class="prev grid-50 tablet-grid-50 grid-parent">
                         <div class="thumb cover lazy loaded"
-                             style="background-image: url('https://Yanoona.github.io/post-images/TeSMMvZK8.jpg');"></div>
-                        <a href="https://Yanoona.github.io/TeSMMvZK8/" class="full-link"></a>
+                             style="background-image: url('https://Yanoona.github.io/post-images/zxJ0ci4F1.jpg');"></div>
+                        <a href="https://Yanoona.github.io/zxJ0ci4F1/" class="full-link"></a>
                         <div class="info">
-                            <time datetime="2020-02-19">2020-02-19</time>
-                            <h4 class="title white no-margin">CentOS 7安装和卸载MySql</h4>
+                            <time datetime="2020-02-20">2020-02-20</time>
+                            <h4 class="title white no-margin">使用axios出现的跨域问题</h4>
                         </div>
                         <span class="epcl-button red">
                   <img src="https://Yanoona.github.io/media/images/left-arrow.svg" width="15" alt="Left Arrow">
@@ -127,6 +150,20 @@
                         <div class="overlay"></div>
                     </article>
                 
+                
+                    <article class="next grid-50 tablet-grid-50 grid-parent">
+                        <div class="thumb cover lazy loaded"
+                             style="background-image: url('https://Yanoona.github.io/post-images/Y72Yd1hiG.jpg');"></div>
+                        <a href="https://Yanoona.github.io/Y72Yd1hiG/" class="full-link"></a>
+                        <div class="info">
+                            <time datetime="2020-02-20">2020-02-20</time>
+                            <h4 class="title white no-margin">使用Iview手脚架搭建项目异常</h4>
+                        </div>
+                        <span class="epcl-button red">
+                  <img src="https://Yanoona.github.io/media/images/right-arrow.svg" width="15" alt="Left Arrow">
+                </span>
+                        <div class="overlay"></div>
+                    </article>
                 
 
                 <div class="clear"></div>
