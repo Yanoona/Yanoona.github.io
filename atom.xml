@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Yanoona.github.io</id>
     <title>姿势美如画( *・ω・)✄╰ひ╯</title>
-    <updated>2020-02-20T02:19:24.657Z</updated>
+    <updated>2020-02-21T01:59:54.929Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Yanoona.github.io"/>
     <link rel="self" href="https://Yanoona.github.io/atom.xml"/>
@@ -609,15 +609,14 @@ set global validate_password_special_char_count=0;
 #设置全集验证密码长度
 set global validate_password_length=4;
 </code></pre>
-<p>赋予用户权限（设置可远程访问🤖）。</p>
-<pre><code>grant all privileges on *.* to 'root'@'%' identified by 'root' with grant option;
+<p>修改密码并赋予用户权限（设置可远程访问🤖）。</p>
+<pre><code>#修改密码
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';
+
+grant all privileges on *.* to 'root'@'%' identified by 'root' with grant option;
 </code></pre>
 <p>刷新权限🙉。</p>
 <pre><code>flush privileges;
-</code></pre>
-<h4 id="设置可远程访问">设置可远程访问</h4>
-<p>Mysql默认不允许远程登录，所以我们这里要设置一下🌈：</p>
-<pre><code>grant all privileges on *.* to 'root'@'%' identified by 'Root123@' with grant option;
 </code></pre>
 <hr>
 <h3 id="拓展配置">拓展配置</h3>
