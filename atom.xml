@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Yanoona.github.io</id>
     <title>姿势美如画( *・ω・)✄╰ひ╯</title>
-    <updated>2020-02-21T01:59:54.929Z</updated>
+    <updated>2020-02-27T08:34:26.299Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Yanoona.github.io"/>
     <link rel="self" href="https://Yanoona.github.io/atom.xml"/>
@@ -10,6 +10,153 @@
     <logo>https://Yanoona.github.io/images/avatar.png</logo>
     <icon>https://Yanoona.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 姿势美如画( *・ω・)✄╰ひ╯</rights>
+    <entry>
+        <title type="html"><![CDATA[CentOS 7定时执行Java程序]]></title>
+        <id>https://Yanoona.github.io/XvCd5eo8U/</id>
+        <link href="https://Yanoona.github.io/XvCd5eo8U/">
+        </link>
+        <updated>2020-02-27T08:26:32.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="概述">😀概述</h2>
+<p>记录一次CentOS7中使用Crontab定时任务执行Java程序的操作。</p>
+<h2 id="准备">😃准备</h2>
+<ul>
+<li>JAVA程序(可运行的Jar包)</li>
+<li>CentOS系统</li>
+<li>Crontab定时任务服务</li>
+</ul>
+<h2 id="步骤">😄步骤</h2>
+<h3 id="将jar包上传到centos系统上">将Jar包上传到CentOS系统上</h3>
+<blockquote>
+<p>此步省略详细操作，简述大概步骤🤐。</p>
+</blockquote>
+<h4 id="建立平台连接">建立平台连接</h4>
+<p>为以后方便在Windows系统和CentOS系统间的文件传输操作，此步建议搭建👨‍🔧 <code>ftp</code>服务器。</p>
+<h4 id="打包java程序">打包Java程序</h4>
+<p>Maven方式：</p>
+<p>在项目中的<strong>pom.xml</strong>文件中，加入以下👇打包标签，之后再使用打包命令<code>mvn clean package</code>或者使用IDEA里的Maven插件。</p>
+<pre><code class="language-xml">&lt;build&gt;
+        &lt;!--使用Maven编译可执行的jar --&gt;
+        &lt;finalName&gt;update_ase_cms&lt;/finalName&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt;
+                &lt;configuration&gt;
+                    &lt;appendAssemblyId&gt;false&lt;/appendAssemblyId&gt;
+                    &lt;descriptorRefs&gt;
+                        &lt;descriptorRef&gt;jar-with-dependencies&lt;/descriptorRef&gt;
+                    &lt;/descriptorRefs&gt;
+                    &lt;archive&gt;
+                        &lt;manifest&gt;
+                            &lt;mainClass&gt;{在这里填入你的启动类}&lt;/mainClass&gt;
+                        &lt;/manifest&gt;
+                    &lt;/archive&gt;
+                &lt;/configuration&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;id&gt;make-assembly&lt;/id&gt;
+                        &lt;phase&gt;package&lt;/phase&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;assembly&lt;/goal&gt;
+                        &lt;/goals&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+
+</code></pre>
+<blockquote>
+<p>如果运行Jar包后出现<code>java.lang.ClassNotFoundException</code>或者<code>no main manifest attribute</code>异常☹️的话，就是此处没有配置好。</p>
+</blockquote>
+<h4 id="将jar包上传到centos中">将Jar包上传到CentOS中</h4>
+<p>此步骤使用 ftp 服务器上传即可😤。</p>
+<hr>
+<h3 id="crontab配置和使用">Crontab配置和使用</h3>
+<h4 id="查看是否安装crontab">查看是否安装Crontab</h4>
+<pre><code>rpm -qa | grep cron
+</code></pre>
+<p>已安装的为下图😋所示（一般来说，系统自带Crontab😉）：</p>
+<figure data-type="image" tabindex="1"><img src="https://Yanoona.github.io/post-images/1582792080190.png" alt="" loading="lazy"></figure>
+<h4 id="查看crontab是否开机自启及相关命令">查看Crontab是否开机自启及相关命令</h4>
+<pre><code>#查看状态
+systemctl status crond
+#开启crontab服务
+systemctl start crond
+#关闭crontab服务
+systemctl stop crond
+#重启crontab服务
+systemctl restart crond
+#开机启动
+systemctl enable crond
+#删除开机启动
+systemctl disable crond
+</code></pre>
+<h4 id="编写shell脚本">编写shell脚本</h4>
+<p>注意：目录必须为👏绝对路径👏。（执行前请注意自己是否配置了Java环境，并且配置成功了）</p>
+<pre><code class="language-shell">#创建shell脚本文件
+vim {你的脚本文件名}.sh
+
+#在文件中输入以下命令
+
+#!/bin/bash
+#写入环境变量
+export LANG=&quot;en_US.UTF-8&quot;
+export JAVA_HOME={这里放你的Java地址}
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+java -jar {你上传的Jar包目录} &amp;&amp; echo &quot;开始执行项目！&quot;
+echo &quot;【`date +%Y-%m-%d_%H:%M:%S`】完成！&quot;
+</code></pre>
+<h4 id="添加定时任务">添加定时任务</h4>
+<p>打开定时任务编辑：</p>
+<pre><code>crontab -e
+</code></pre>
+<p>在打开后的文本中编辑：</p>
+<pre><code>*/1 * * * * {你的shell文件的绝对路径} &gt;&gt; {要将输出信息存储到日志文件的目录文件}
+</code></pre>
+<blockquote>
+<ul>
+<li>
+<p>👩‍🏫👩‍🏫<code>{要将输出信息存储到日志文件的目录文件}</code>这里的意思就是<strong>每次执行时将shell脚本中的输出都追加到这个文件下</strong></p>
+</li>
+<li>
+<p><code>*/1 * * * *</code>这里表示每隔1分钟就执行一次，具体用法如以下所示：</p>
+</li>
+</ul>
+<p>⚡️<a href="https://www.e-learn.cn/content/qita/2644597">Crontab-易学教程</a> 或者 <a href="http://cron.qqe2.com/">Crontab表达式生成</a>⚡️</p>
+</blockquote>
+<h4 id="查看定时任务执行状态">查看定时任务执行状态</h4>
+<h5 id="查看任务日志">查看任务日志：</h5>
+<pre><code>tail -f /var/log/cron
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://Yanoona.github.io/post-images/1582792071997.png" alt="" loading="lazy"></figure>
+<p>其中如<code>Feb 27 15:57:25 hadoop104 crontab[21024]: (hadoop) REPLACE (hadoop)</code>等信息的作用为（借大佬😎说的）：</p>
+<blockquote>
+<p>Cron程序自己的日志，像是Cron daemon刚启动的时候打印的信息，类似于报告版本之类的，这里说此版本的crond支持inotify特性，也就是说，可以自动监测配置文件的改变（利用OS的inotify接口）</p>
+</blockquote>
+<p>而<code>Feb 27 16:00:01 hadoop104 CROND[21454]: (root) CMD (/usr/lib64/sa/sa1 1 1)</code>的作用为：</p>
+<blockquote>
+<p>Cron在某个时间点运行了某个Crontab里CMD，这里的CMD名字叫做sa，是系统信息收集的后端，请参见sar/sa</p>
+</blockquote>
+<p><code>Feb 27 16:06:01 hadoop104 CROND[21644]: (hadoop) CMD (/usr/java_program/crontab_java.sh &gt;&gt; /usr/java_program/file)</code>这一类信息表示：</p>
+<blockquote>
+<p>在这个时间段执行的定时任务。</p>
+</blockquote>
+<h5 id="查看执行了的定时任务信息">查看执行了的定时任务信息</h5>
+<p>因为之前在定时任务编辑时，我们写了✏️<code>{你的shell文件的绝对路径} &gt;&gt; {要将输出信息存储到日志文件的目录文件}</code>。本步骤就是查看👉<code>{要将输出信息存储到日志文件的目录文件}</code>这个文件里的信息。</p>
+<p>进入到这个目录，如我这里的 /usr/java_program/file 文件。</p>
+<p>打开如下图所示，表明任务执行成功，没有报错。🌈🌈</p>
+<figure data-type="image" tabindex="3"><img src="https://Yanoona.github.io/post-images/1582792045981.png" alt="" loading="lazy"></figure>
+<hr>
+<h3 id="使用总结">使用总结</h3>
+<ol>
+<li>打包的时候，现在本地测试jar包能不能运行，会不会报异常，确认没有问题之后，方可上传。</li>
+<li>如果在集群环境下设置定时任务，最好先确保每台机子的时区、时间是否一致。</li>
+<li>路径使用绝对路径编写。</li>
+</ol>
+<p>就先记录这么多了，还没碰到的异常就等到以后使用的在记录，GoodBye！</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[使用axios出现的跨域问题]]></title>
         <id>https://Yanoona.github.io/zxJ0ci4F1/</id>
