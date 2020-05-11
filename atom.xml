@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Yanoona.github.io</id>
     <title>姿势美如画( *・ω・)✄╰ひ╯</title>
-    <updated>2020-02-27T08:34:26.299Z</updated>
+    <updated>2020-05-11T09:30:58.153Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Yanoona.github.io"/>
     <link rel="self" href="https://Yanoona.github.io/atom.xml"/>
@@ -10,6 +10,51 @@
     <logo>https://Yanoona.github.io/images/avatar.png</logo>
     <icon>https://Yanoona.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 姿势美如画( *・ω・)✄╰ひ╯</rights>
+    <entry>
+        <title type="html"><![CDATA[Java8日期API使用记录]]></title>
+        <id>https://Yanoona.github.io/lIPSlIjZp/</id>
+        <link href="https://Yanoona.github.io/lIPSlIjZp/">
+        </link>
+        <updated>2020-05-11T09:30:00.000Z</updated>
+        <summary type="html"><![CDATA[<h2 id="日期转换">日期转换</h2>
+<h3 id="1date转换成localdate">1.Date转换成LocalDate</h3>
+<p><strong>这里的 Date 为 <code>java.util</code>包下的 Date。</strong></p>
+<h4 id="第一种方式">第一种方式：</h4>
+]]></summary>
+        <content type="html"><![CDATA[<h2 id="日期转换">日期转换</h2>
+<h3 id="1date转换成localdate">1.Date转换成LocalDate</h3>
+<p><strong>这里的 Date 为 <code>java.util</code>包下的 Date。</strong></p>
+<h4 id="第一种方式">第一种方式：</h4>
+<!-- more -->
+<pre><code class="language-java">Date date = new Date();
+//使用Date类中的toInstant方法转换成Time包中的Instant类
+Instant instant = date.toInstant();
+//因为转换后的Instant类不带有时区，所以为其添加时区
+ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+//调用toLocalDate方法转换成LocalDate
+zonedDateTime.toLocalDate();
+</code></pre>
+<h4 id="第二种方式">第二种方式：</h4>
+<pre><code class="language-java">Date date = new Date();
+//先将其转换成 java.sql包的Date，因为此包下的Date类中带有 直接转换LocalDate 的方法
+java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+LocalDate localDate = sqlDate.toLocalDate();
+</code></pre>
+<hr>
+<h3 id="2date转换成localdate">2.Date转换成LocalDate</h3>
+<p><strong>这里的 Date 为 <code>java.sql</code>包下的 Date。</strong></p>
+<pre><code class="language-java">Date sqlDate = new Date(date.getTime());
+LocalDate localDate = sqlDate.toLocalDate();
+</code></pre>
+<hr>
+<h3 id="3timestamp转换为localdate">3.Timestamp转换为LocalDate</h3>
+<pre><code class="language-java">Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+LocalDateTime localDateTime = timestamp.toLocalDateTime();
+LocalDate localDate = localDateTime.toLocalDate();
+</code></pre>
+<!-- more -->
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[CentOS 7定时执行Java程序]]></title>
         <id>https://Yanoona.github.io/XvCd5eo8U/</id>
