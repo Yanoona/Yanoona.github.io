@@ -71,7 +71,7 @@
             <div class="meta top">
                 <time class="meta-info" style="float:left;" datetime="2020-05-11"><i
                             class="fa fa-calendar"></i><span
-                            class="lately">1 分钟前</span></time>
+                            class="lately">18 小时前</span></time>
             </div>
             <div class="info">
                 <div class="tags ">
@@ -121,7 +121,58 @@ LocalDate localDate = sqlDate.toLocalDate();
 LocalDateTime localDateTime = timestamp.toLocalDateTime();
 LocalDate localDate = localDateTime.toLocalDate();
 </code></pre>
-<!-- more -->
+<h2 id="-more-"><!-- more --></h2>
+<h4 id="4calendar转换为zonedatetime">4.Calendar转换为ZoneDateTime</h4>
+<pre><code class="language-java">Calendar calendar = Calendar.getInstance();
+//Calendar对象在Java1.1版本开始提供了一个方法用于获取时区对象getTimeZone方法
+//转换需要先获取到时区信息
+TimeZone timeZone = calendar.getTimeZone();
+//自Java1.8版本开始，TimeZone类加入了一个方法可以获取到ZoneId
+ZoneId zoneId = timeZone.toZoneId();
+//使用ofInstant方法将Instant参数和时区封装成ZoneDateTime
+ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(calendar.toInstant(),zoneId);
+</code></pre>
+<h2 id="日期的解析与格式化控制">日期的解析与格式化控制</h2>
+<blockquote>
+<p><code>SimpleDateFormat</code> 类是线程不安全的，所以 Java1.8 版本加入了 <code>DateTimeFormatter</code>.</p>
+<p><code>DateTimeFormatter</code> 类提供了大量预定义格式化器，包括常量（如ISO_LOCAL_DATE），模式字母（如yyyy-MM-dd）以及本地化样式.</p>
+<p><strong>与<code>SimpleDateFormat</code> 不同的是，新版本的日期/时间API的格式化与解析不需要在创建转换器对象再进行转换了，通过时间日期对象的<code>parse/format</code>方法可以直接进行转换.</strong></p>
+</blockquote>
+<h3 id="1格式控制-format-和解析-parse">1.格式控制 format 和解析 parse</h3>
+<pre><code class="language-java">LocalDateTime localDateTime = LocalDateTime.now();
+//使用format方法进行格式化处理
+String dateTime = localDateTime.format(DateTimeFormatter.ISO_DATE);
+System.out.println(dateTime);
+
+//使用parse方法解析字符串为日期对象
+//注意：此处的dateTime字符串经过上面的格式化的处理后是LocalDate格式.
+//如果使用LocalDateTime接收，编译会通过，但会报出异常：
+//		Process 'command 'C:/Java/jdk1.8.0_211/bin/java.exe'' finished with non-zero exit value 1
+LocalDate localDate = LocalDate.parse(dateTime);
+System.out.println(localDate);
+</code></pre>
+<hr>
+<h3 id="2使用-oflocalizeddate-方法指定解析长度">2.使用 ofLocalizedDate 方法指定解析长度</h3>
+<p><strong>此方法在不同时区有不同的解析格式</strong></p>
+<pre><code class="language-java">String dateTime1 = localDateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
+String dateTime2 = localDateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
+String dateTime3 = localDateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
+String dateTime4 = localDateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG));
+//输出结果：FULL：2020年5月12日 星期二
+System.out.println(&quot;FULL：&quot; + dateTime1);
+//输出结果：SHORT：20-5-12
+System.out.println(&quot;SHORT：&quot; + dateTime2);
+//输出结果：MEDIUM：2020-5-12
+System.out.println(&quot;MEDIUM：&quot; + dateTime3);
+//输出结果：LONG：2020年5月12日
+System.out.println(&quot;LONG：&quot; + dateTime4);
+</code></pre>
+<hr>
+<h3 id="3自定义格式">3.自定义格式</h3>
+<pre><code class="language-java">String datetime = localDateTime.format(DateTimeFormatter.ofPattern(&quot;yyyy/MM/dd HH:mm:ss:SSS&quot;));
+//输出结果：LONG：2020/05/12 09:43:25:213
+System.out.println(datetime);
+</code></pre>
 
                     </div>
                     <div class="clear"></div>
