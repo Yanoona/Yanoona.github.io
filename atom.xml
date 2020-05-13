@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Yanoona.github.io</id>
     <title>姿势美如画( *・ω・)✄╰ひ╯</title>
-    <updated>2020-05-13T09:13:06.930Z</updated>
+    <updated>2020-05-13T09:29:16.790Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Yanoona.github.io"/>
     <link rel="self" href="https://Yanoona.github.io/atom.xml"/>
@@ -346,13 +346,9 @@ echo &quot;【`date +%Y-%m-%d_%H:%M:%S`】完成！&quot;
 <figure data-type="image" tabindex="2"><img src="https://Yanoona.github.io/post-images/1582792071997.png" alt="" loading="lazy"></figure>
 <p>其中如<code>Feb 27 15:57:25 hadoop104 crontab[21024]: (hadoop) REPLACE (hadoop)</code>等信息的作用为（借大佬😎说的）：</p>
 <blockquote>
-<p>Cron程序自己的日志，像是Cron daemon刚启动的时候打印的信息，类似于报告版本之类的，这里说此版本的crond支持inotify特性，也就是说，可以自动监测配置文件的改变（利用OS的inotify接口）</p>
+<p>Cron程序自己的日志，像是Cron daemon刚启动的时候打印的信息，类似于报告版本之类的，这里说此版本的crond支持inotify特性，也就是说，可以自动监测配置文件的改变（利用OS的inotify接口）而<code>Feb 27 16:00:01 hadoop104 CROND[21454]: (root) CMD (/usr/lib64/sa/sa1 1 1)</code>的作用为：</p>
+<p>Cron在某个时间点运行了某个Crontab里CMD，这里的CMD名字叫做sa，是系统信息收集的后端，请参见sar/sa<code>Feb 27 16:06:01 hadoop104 CROND[21644]: (hadoop) CMD (/usr/java_program/crontab_java.sh &gt;&gt; /usr/java_program/file)</code>这一类信息表示：</p>
 </blockquote>
-<p>而<code>Feb 27 16:00:01 hadoop104 CROND[21454]: (root) CMD (/usr/lib64/sa/sa1 1 1)</code>的作用为：</p>
-<blockquote>
-<p>Cron在某个时间点运行了某个Crontab里CMD，这里的CMD名字叫做sa，是系统信息收集的后端，请参见sar/sa</p>
-</blockquote>
-<p><code>Feb 27 16:06:01 hadoop104 CROND[21644]: (hadoop) CMD (/usr/java_program/crontab_java.sh &gt;&gt; /usr/java_program/file)</code>这一类信息表示：</p>
 <blockquote>
 <p>在这个时间段执行的定时任务。</p>
 </blockquote>
@@ -364,7 +360,7 @@ echo &quot;【`date +%Y-%m-%d_%H:%M:%S`】完成！&quot;
 <hr>
 <h3 id="使用总结">使用总结</h3>
 <ol>
-<li>打包的时候，现在本地测试jar包能不能运行，会不会报异常，确认没有问题之后，方可上传。</li>
+<li>打包的时候，先在本地测试jar包能不能运行，会不会报异常，确认没有问题之后，方可上传。</li>
 <li>如果在集群环境下设置定时任务，最好先确保每台机子的时区、时间是否一致。</li>
 <li>路径使用绝对路径编写。</li>
 </ol>
