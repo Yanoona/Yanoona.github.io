@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Yanoona.github.io</id>
     <title>姿势美如画( *・ω・)✄╰ひ╯</title>
-    <updated>2020-05-13T09:11:24.569Z</updated>
+    <updated>2020-05-13T09:13:06.930Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Yanoona.github.io"/>
     <link rel="self" href="https://Yanoona.github.io/atom.xml"/>
@@ -42,10 +42,10 @@
 </li>
 <li>
 <p><strong>spring-expression</strong>模块提供了强大的表达式语言，用于在运行时查询和操作对象图。它是JSP2.1规范中定义的统一表达式语言的扩展，支持set和get属性值、属性赋值、方法调用、访问数组集合及索引的内容、逻辑算术运算、命名变量、通过名字从Spring IoC容器检索对象，还支持列表的投影、选择以及聚合等。</p>
-<hr>
-<p>它们的完整依赖关系如下图所示：</p>
 </li>
 </ul>
+<hr>
+<p>它们的完整依赖关系如下图所示：</p>
 <figure data-type="image" tabindex="2"><img src="https://Yanoona.github.io/post-images/1589359408576.png" alt="Spring 体系结构" loading="lazy"></figure>
 <h2 id="三-层级">三、层级</h2>
 <h3 id="数据访问层集成层">数据访问层/集成层</h3>
