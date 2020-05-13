@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Yanoona.github.io</id>
     <title>姿势美如画( *・ω・)✄╰ひ╯</title>
-    <updated>2020-05-12T03:30:38.507Z</updated>
+    <updated>2020-05-13T08:46:23.862Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Yanoona.github.io"/>
     <link rel="self" href="https://Yanoona.github.io/atom.xml"/>
@@ -10,6 +10,124 @@
     <logo>https://Yanoona.github.io/images/avatar.png</logo>
     <icon>https://Yanoona.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 姿势美如画( *・ω・)✄╰ひ╯</rights>
+    <entry>
+        <title type="html"><![CDATA[Spring 知识回顾之 体系结构]]></title>
+        <id>https://Yanoona.github.io/ta0wVkBzF/</id>
+        <link href="https://Yanoona.github.io/ta0wVkBzF/">
+        </link>
+        <updated>2020-05-13T04:41:46.000Z</updated>
+        <summary type="html"><![CDATA[<h2 id="一-体系结构">一、体系结构</h2>
+<p>Spring 大概提供了20个左右的应用模块，可以根据应用程序的需求来进行使用。</p>
+]]></summary>
+        <content type="html"><![CDATA[<h2 id="一-体系结构">一、体系结构</h2>
+<p>Spring 大概提供了20个左右的应用模块，可以根据应用程序的需求来进行使用。</p>
+<!-- more -->
+<figure data-type="image" tabindex="1"><img src="https://Yanoona.github.io/post-images/1589359363971.png" alt="Spring 架构图" loading="lazy"></figure>
+<h2 id="二-核心容器">二、核心容器</h2>
+<blockquote>
+<p>核心容器由<strong>spring-core，spring-beans，spring-context，spring-context-support和spring-expression</strong>（SpEL，Spring表达式语言，Spring Expression Language）等模块组成，它们的细节如下：</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>spring-core</strong>模块提供了框架的基本组成部分，包括 **控制反转（IOC）<strong>和</strong>依赖注入（DI）**功能。</p>
+</li>
+<li>
+<p><strong>spring-beans</strong> 模块提供 BeanFactory，工厂模式的微妙实现，它移除了编码式单例的需要，并且可以把配置和依赖从实际编码逻辑中解耦。</p>
+</li>
+<li>
+<p><strong>spring-context</strong> 模块建立在由<strong>core</strong>和 <strong>beans</strong> 模块的基础上建立起来的，它以一种类似于JNDI注册的方式访问对象。Context模块继承自Bean模块，并且添加了国际化（比如，使用资源束）、事件传播、资源加载和透明地创建上下文（比如，通过Servelet容器）等功能。Context模块也支持Java EE的功能，比如<code>EJB（Enterprise Java Beans的缩写，企业级JavaBean）</code>、<code>JMX（Java Management Extensions，即Java管理扩展）</code>和远程调用等。<strong>ApplicationContext</strong>接口是Context模块的焦点。</p>
+</li>
+<li>
+<p><strong>spring-context-support</strong>提供了对第三方库集成到Spring上下文的支持，比如缓存（EhCache, Guava, JCache）、邮件（JavaMail）、调度（CommonJ, Quartz）、模板引擎（FreeMarker, JasperReports, Velocity）等。</p>
+</li>
+<li>
+<p><strong>spring-expression</strong>模块提供了强大的表达式语言，用于在运行时查询和操作对象图。它是JSP2.1规范中定义的统一表达式语言的扩展，支持set和get属性值、属性赋值、方法调用、访问数组集合及索引的内容、逻辑算术运算、命名变量、通过名字从Spring IoC容器检索对象，还支持列表的投影、选择以及聚合等。</p>
+<hr>
+<p>它们的完整依赖关系如下图所示：</p>
+</li>
+</ul>
+<figure data-type="image" tabindex="2"><img src="https://Yanoona.github.io/post-images/1589359408576.png" alt="Spring 体系结构" loading="lazy"></figure>
+<h2 id="三-层级">三、层级</h2>
+<h3 id="数据访问层集成层">数据访问层/集成层</h3>
+<p>数据访问层包括 JDBC（ Java Data Base Connectivity ）、ORM（ Object Relational Mapping ）、OXM （ Object XML Mapping ）、JMS （ Java Message Service ）和事务处理模块：</p>
+<ul>
+<li>JDBC ：提供了JDBC的抽象层，消除了冗长的JDBC编码和对数据库供应商特定错误代码的解析。</li>
+<li>ORM ：提供了对流行的对象关系映射API的集成，包括 JPA、MyBatis、Hibernate等。通过此模块可以让这些ORM框架和Spring的其它功能整合。</li>
+<li>OXM ：提供了对OXM实现的支持，例如XML Beans。</li>
+<li>JMS   ：包含生产（produce）和消费（consume）消息的功能，从Spring4.1开始集成了spring-messagessing模块。</li>
+<li>事务处理模块：为实现所有特殊接口类及所有的POJO支持编程式和声明式事务的管理。</li>
+</ul>
+<h3 id="web层">WEB层</h3>
+<p>Web 层由 Web，Web-MVC，Web-Socket 和 Web-Portlet 组成，它们的细节如下：</p>
+<ul>
+<li><strong>Web</strong> 模块提供面向web的基本功能和面向web的应用上下文，比如多部分（multipart）文件上传功能、使用Servlet监听器初始化IoC容器等。它还包括HTTP客户端以及Spring远程调用中与web相关的部分。。</li>
+<li><strong>Web-MVC</strong> 模块为web应用提供了模型视图控制（MVC）和REST Web服务的实现。Spring的MVC框架可以使领域模型代码和web表单完全地分离，且可以与Spring框架的其它所有功能进行集成。</li>
+<li><strong>Web-Socket</strong> 模块为 WebSocket-based 提供了支持，而且在 web 应用程序中提供了客户端和服务器端之间通信的两种方式。</li>
+<li><strong>Web-Portlet</strong> 模块提供了用于Portlet环境的MVC实现，并反映了spring-webmvc模块的功能。</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Spring 知识回顾之 概念]]></title>
+        <id>https://Yanoona.github.io/CpjS5YWXn/</id>
+        <link href="https://Yanoona.github.io/CpjS5YWXn/">
+        </link>
+        <updated>2020-05-13T02:39:19.000Z</updated>
+        <summary type="html"><![CDATA[<h2 id="一-概述">一、概述</h2>
+<h3 id="11-说明">1.1 说明</h3>
+<ul>
+<li>Spring 是最受欢迎的企业级Java应用程序开发框架</li>
+</ul>
+]]></summary>
+        <content type="html"><![CDATA[<h2 id="一-概述">一、概述</h2>
+<h3 id="11-说明">1.1 说明</h3>
+<ul>
+<li>Spring 是最受欢迎的企业级Java应用程序开发框架<!-- more -->
+</li>
+<li>Spring 框架是一个开源的Java项目，最初由 Rod Johnson 以及 Juergen Hoeller 等人开发编写，并且于2003年6月在 <a href="https://zh.wikipedia.org/wiki/Apache_License_2.0">Apache License 2.0</a> 许可下发布</li>
+<li>Spring 是轻量级的框架，最初版本只有2M左右</li>
+<li>Spring 的<strong>核心特性是可以用于开发任何Java程序，以及简化Java程序开发的复杂度</strong>。</li>
+</ul>
+<h3 id="12-好处">1.2 好处</h3>
+<ul>
+<li>方便解耦,简化开发</li>
+<li>支持面相切面的编程,并且把应用业务逻辑和系统分开</li>
+<li>包含并管理应用中对象的生命周期和配置</li>
+<li>Spring 的 web 框架是一个设计良好的 web MVC 框架，它为比如 Structs 或者其他工程上的或者不怎么受欢迎的 web 框架提供了一个很好的供替代的选择。</li>
+<li>Spring提供了一致的事务管理接口，可向下扩展到本地事务并扩展到全局事务</li>
+</ul>
+<h3 id="13-重点概念">1.3 重点概念</h3>
+<h4 id="依赖注入dependency-injection简称di">依赖注入（Dependency Injection，简称<strong>DI</strong>）</h4>
+<blockquote>
+<p>Spring 最认同的技术是控制反转的**依赖注入（DI）**模式。控制反转（IoC）是一个通用的概念，它可以用许多不同的方式去表达，依赖注入仅仅是控制反转的一个具体的例子。</p>
+<p>将依赖关系部分转化为两个类之间的关联。例如，类 A 依赖于类 B。现在，让我们看一看第二部分，注入。所有这一切都意味着类 B 将通过 IoC 被注入到类 A 中。</p>
+<p>依赖注入可以以向构造函数传递参数的方式发生，或者通过使用 setter 方法 post-construction。</p>
+</blockquote>
+<p>一句话概括：<mark>创建被调用者实例的工作由Spring容器来完成，然后注入调用者，因此被称为<strong>依赖注入</strong>。</mark></p>
+<hr>
+<h4 id="控制反转inversion-of-control缩写为ioc">控制反转（Inversion of Control，缩写为<strong>IOC</strong>）</h4>
+<blockquote>
+<p><strong>控制反转（IOC）</strong>，是面向对象编程中的一种设计原则，可以用来减低代码之间的耦合度。其中最常见的方式叫做<strong>依赖注入（DI）</strong>，还有一种方式叫 “依赖查找”。通过控制反转，对象在被创建的时候，有一个调控系统内所有对象的外界实体，将其所依赖的对象的引用传递（注入）给它。</p>
+</blockquote>
+<p>一句话概括：<mark>创建被调用者的工作不再由调用者来完成，因此被称为<strong>控制反转（IOC）</strong>。</mark></p>
+<hr>
+<h4 id="面向切面aspect-oriented-programming缩写为aop">面向切面（Aspect-oriented programming，缩写为AOP）</h4>
+<blockquote>
+<p>**面向切面（AOP）**是计算机科学中的一种程序设计思想，<strong>目标在将横切关注点和业务主体进行进一步分离，以提高程序代码的模块化程度</strong>。</p>
+</blockquote>
+<p>AOP的概念点：</p>
+<ul>
+<li>关注点（Concern）：<em>对软件工程有意义的小的、可管理的、可描述的软件组成部分，一个关注点通常只同一个特定概念或目标相关联。</em></li>
+<li>主关注点（Core concern）：<em>一个软件最主要的关注点。</em></li>
+<li>关注点分离（Separation of concerns，SOC）：<em>标识、封装和操作关注点的能力。</em></li>
+<li>方法（Method）：<em>用来描述、设计、实现一个给定关注点的软件构造单位。</em></li>
+<li>横切（Crosscut）：<em>两个关注点相互横切，如果实现它们的方法存在交集。</em></li>
+<li>支配性分解（Dominant decomposition）：<em>将软件分解成模块的主要方式。支配性分解一般是按主关注点进行模块分解的。</em></li>
+<li>横切关注点（Crosscutting concerns）：<em>在传统的程序设计语言中，除了主关注点可以被支配性分解方式捕捉以外，还有许多没有被支配性分解方式捕捉到的关注点，这些关注点的实现会弥散在整个软件内部，这时这些关注点同主关注点是横切的。</em></li>
+<li>切面（Aspect）：<em>在支配性分解的基础上，提供的一种辅助的模块化机制，这种新的模块化机制可以捕捉横切关注点。</em></li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Java8日期API使用记录]]></title>
         <id>https://Yanoona.github.io/lIPSlIjZp/</id>
@@ -878,28 +996,6 @@ default-character-set=utf8
 </code></pre>
 <p>保存后，再重启MySQL服务登录MySQL查看👀字符集是否全为utf8。</p>
 <figure data-type="image" tabindex="8"><img src="https://Yanoona.github.io/post-images/1582081817742.png" alt="" loading="lazy"></figure>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[CentOS 7 中所遇见的异常]]></title>
-        <id>https://Yanoona.github.io/JD2fNczzi/</id>
-        <link href="https://Yanoona.github.io/JD2fNczzi/">
-        </link>
-        <updated>2020-02-18T07:55:17.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="网络异常">网络异常</h2>
-<h3 id="一-查看不到-ipv4-地址">一、查看不到 IPV4 地址</h3>
-<blockquote>
-<p>😉<strong>异常说明：使用<code>ip addr</code>命令查询 IP 地址时，找不到 IPV4 地址。查询结果如下图所示：</strong></p>
-</blockquote>
-<figure data-type="image" tabindex="1"><img src="https://Yanoona.github.io/post-images/1582012722489.png" alt="" loading="lazy"></figure>
-<p>🤓 <strong>解决方案：禁用NetworkManager</strong></p>
-<pre><code> #停止网络管理服务
- systemctl stop NetworkManager
- #禁止开机自启
- systemctl disable NetworkManager
- #重启网络服务
- systemctl restart network
-</code></pre>
 ]]></content>
     </entry>
 </feed>

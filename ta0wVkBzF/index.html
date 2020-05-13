@@ -1,8 +1,8 @@
 <html>
-  <head>
+<head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>我的观影 | 姿势美如画( *・ω・)✄╰ひ╯</title>
+<title>Spring 知识回顾之 体系结构 | 姿势美如画( *・ω・)✄╰ひ╯</title>
 <meta name="description" content="大爷不进来看看吗？这里有好康的哦~~~" />
 <link rel="shortcut icon" href="https://Yanoona.github.io/favicon.ico">
 <link rel="stylesheet" href="https://Yanoona.github.io/styles/main.css">
@@ -13,15 +13,11 @@
 <script src="https://Yanoona.github.io/media/js/pace.min.js"></script>
 <script src="https://Yanoona.github.io/media/js/view-image.min.js"></script>
 <script src="https://Yanoona.github.io/media/js/functions.js"></script>
-    <meta name="referrer" content="never">
-    <link rel="stylesheet" href="https://Yanoona.github.io/media/js/Bmdb.min.css">
-    <script type='text/javascript' src='https://Yanoona.github.io/media/js/Bmdb.min.js'></script>
-  </head>
-  <body>
-    <!-- start: #wrapper -->
-    <div class="wrapper">
-      
-      <header id="header" class="grid-container">
+    <script src="https://Yanoona.github.io/media/js/waterfall.min.js"></script>
+    <script src="https://Yanoona.github.io/media/js/prism.min.js"></script>
+</head>
+<body>
+<header id="header" class="grid-container">
     <!-- start: .menu-wrapper -->
     <div class="menu-mobile">
         <i class="fa fa-reorder"></i>
@@ -67,14 +63,114 @@
     <div class="clear"></div>
 </header>
 
-      <main id="friends" class="main fullcover no-sidebar content">
-        <div class="grid-container module-wrapper enable-masonry aos-init aos-animate" data-aos="fade-up">
-        <div class="epcl-page-wrapper">
-          <div class="section-content" style="margin-top:3em;"></div>
+<main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
+
+    <div class="center content">
+        <div class="featured-image cover"
+             style="background-image: url('https://Yanoona.github.io/post-images/ta0wVkBzF.jpg');">
+            <div class="meta top">
+                <time class="meta-info" style="float:left;" datetime="2020-05-13"><i
+                            class="fa fa-calendar"></i><span
+                            class="lately">4 小时前</span></time>
+            </div>
+            <div class="info">
+                <div class="tags ">
+                    
+                        <a href="https://Yanoona.github.io/7D-9V5P5T/" class="ctag ctag-0 ctag-7D-9V5P5T"
+                           aria-label="">Spring</a>
+                    
+                        <a href="https://Yanoona.github.io/java/" class="ctag ctag-1 ctag-java"
+                           aria-label="">Java</a>
+                    
+                </div>
+                <h1 class="title ularge white bold">Spring 知识回顾之 体系结构</h1>
+            </div>
         </div>
+    </div>
+
+    <div class="epcl-page-wrapper">
+        <div class="left-content grid-70 np-mobile">
+            <article class="main-article post">
+                <section class="post-content">
+                    <div class="text">
+                        <h2 id="一-体系结构">一、体系结构</h2>
+<p>Spring 大概提供了20个左右的应用模块，可以根据应用程序的需求来进行使用。</p>
+<!-- more -->
+<figure data-type="image" tabindex="1"><img src="https://Yanoona.github.io/post-images/1589359363971.png" alt="Spring 架构图" loading="lazy"></figure>
+<h2 id="二-核心容器">二、核心容器</h2>
+<blockquote>
+<p>核心容器由<strong>spring-core，spring-beans，spring-context，spring-context-support和spring-expression</strong>（SpEL，Spring表达式语言，Spring Expression Language）等模块组成，它们的细节如下：</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>spring-core</strong>模块提供了框架的基本组成部分，包括 **控制反转（IOC）<strong>和</strong>依赖注入（DI）**功能。</p>
+</li>
+<li>
+<p><strong>spring-beans</strong> 模块提供 BeanFactory，工厂模式的微妙实现，它移除了编码式单例的需要，并且可以把配置和依赖从实际编码逻辑中解耦。</p>
+</li>
+<li>
+<p><strong>spring-context</strong> 模块建立在由<strong>core</strong>和 <strong>beans</strong> 模块的基础上建立起来的，它以一种类似于JNDI注册的方式访问对象。Context模块继承自Bean模块，并且添加了国际化（比如，使用资源束）、事件传播、资源加载和透明地创建上下文（比如，通过Servelet容器）等功能。Context模块也支持Java EE的功能，比如<code>EJB（Enterprise Java Beans的缩写，企业级JavaBean）</code>、<code>JMX（Java Management Extensions，即Java管理扩展）</code>和远程调用等。<strong>ApplicationContext</strong>接口是Context模块的焦点。</p>
+</li>
+<li>
+<p><strong>spring-context-support</strong>提供了对第三方库集成到Spring上下文的支持，比如缓存（EhCache, Guava, JCache）、邮件（JavaMail）、调度（CommonJ, Quartz）、模板引擎（FreeMarker, JasperReports, Velocity）等。</p>
+</li>
+<li>
+<p><strong>spring-expression</strong>模块提供了强大的表达式语言，用于在运行时查询和操作对象图。它是JSP2.1规范中定义的统一表达式语言的扩展，支持set和get属性值、属性赋值、方法调用、访问数组集合及索引的内容、逻辑算术运算、命名变量、通过名字从Spring IoC容器检索对象，还支持列表的投影、选择以及聚合等。</p>
+<hr>
+<p>它们的完整依赖关系如下图所示：</p>
+</li>
+</ul>
+<figure data-type="image" tabindex="2"><img src="https://Yanoona.github.io/post-images/1589359408576.png" alt="Spring 体系结构" loading="lazy"></figure>
+<h2 id="三-层级">三、层级</h2>
+<h3 id="数据访问层集成层">数据访问层/集成层</h3>
+<p>数据访问层包括 JDBC（ Java Data Base Connectivity ）、ORM（ Object Relational Mapping ）、OXM （ Object XML Mapping ）、JMS （ Java Message Service ）和事务处理模块：</p>
+<ul>
+<li>JDBC ：提供了JDBC的抽象层，消除了冗长的JDBC编码和对数据库供应商特定错误代码的解析。</li>
+<li>ORM ：提供了对流行的对象关系映射API的集成，包括 JPA、MyBatis、Hibernate等。通过此模块可以让这些ORM框架和Spring的其它功能整合。</li>
+<li>OXM ：提供了对OXM实现的支持，例如XML Beans。</li>
+<li>JMS   ：包含生产（produce）和消费（consume）消息的功能，从Spring4.1开始集成了spring-messagessing模块。</li>
+<li>事务处理模块：为实现所有特殊接口类及所有的POJO支持编程式和声明式事务的管理。</li>
+</ul>
+<h3 id="web层">WEB层</h3>
+<p>Web 层由 Web，Web-MVC，Web-Socket 和 Web-Portlet 组成，它们的细节如下：</p>
+<ul>
+<li><strong>Web</strong> 模块提供面向web的基本功能和面向web的应用上下文，比如多部分（multipart）文件上传功能、使用Servlet监听器初始化IoC容器等。它还包括HTTP客户端以及Spring远程调用中与web相关的部分。。</li>
+<li><strong>Web-MVC</strong> 模块为web应用提供了模型视图控制（MVC）和REST Web服务的实现。Spring的MVC框架可以使领域模型代码和web表单完全地分离，且可以与Spring框架的其它所有功能进行集成。</li>
+<li><strong>Web-Socket</strong> 模块为 WebSocket-based 提供了支持，而且在 web 应用程序中提供了客户端和服务器端之间通信的两种方式。</li>
+<li><strong>Web-Portlet</strong> 模块提供了用于Portlet环境的MVC实现，并反映了spring-webmvc模块的功能。</li>
+</ul>
+
+                    </div>
+                    <div class="clear"></div>
+                </section>
+            </article>
+            <div class="clear"></div>
+
+            <section class="related section">
+                
+                
+                    <article class="next grid-50 tablet-grid-50 grid-parent">
+                        <div class="thumb cover lazy loaded"
+                             style="background-image: url('https://Yanoona.github.io/post-images/CpjS5YWXn.jpg');"></div>
+                        <a href="https://Yanoona.github.io/CpjS5YWXn/" class="full-link"></a>
+                        <div class="info">
+                            <time datetime="2020-05-13">2020-05-13</time>
+                            <h4 class="title white no-margin">Spring 知识回顾之 概念</h4>
+                        </div>
+                        <span class="epcl-button red">
+                  <img src="https://Yanoona.github.io/media/images/right-arrow.svg" width="15" alt="Left Arrow">
+                </span>
+                        <div class="overlay"></div>
+                    </article>
+                
+
+                <div class="clear"></div>
+            </section>
         </div>
-      </main>
-        <footer id="footer" class="grid-container">
+    </div>
+</main>
+
+    <footer id="footer" class="grid-container">
         <div class="widgets row gradient-effect">
             <div class="default-sidebar border-effect">
               <div class="grid-33 tablet-grid-50 mobile-grid-100">
@@ -220,16 +316,52 @@
         </a>
     </footer>
     <div class="clear"></div>
-    <script>
-    new Bmdb({
-      type: 'movies',
-      selector: '.section-content',
-      secret: '0bba46738324c778ad2da662837c14d2c1e5bceb22e3729febc9fd3677bdcea5',
-      noMoreText: '没有更多数据了',
-      limit: 30
-    })
-    </script>
-    </div>
-    <!-- end: #wrapper -->
-  </body>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $("photos img").each(function () {
+            var _a = $("<a></a>").attr("href", this.src);
+            $(this).wrap("<div class='photo'></div>").wrap(_a);
+        })
+        $("figure img").each(function () {
+            var _b = $("<a></a>").attr("href", this.src);
+            $(this).wrap(_b);
+        })
+        isImgLoad(function () {
+            var photos = document.querySelector('photos');
+            if (photos) {
+                waterfall(photos);
+            }
+            $(window).resize(function () {
+                if (photos) {
+                    waterfall(photos);
+                }
+            });
+        });
+        var t_img;
+        var isLoad = true;
+
+        function isImgLoad(callback) {
+            $('photos img').each(function () {
+                if (this.height === 0) {
+                    isLoad = false;
+                    return false;
+                }
+            });
+            if (isLoad) {
+                clearTimeout(t_img);
+                callback();
+            } else {
+                isLoad = true;
+                t_img = setTimeout(function () {
+                    isImgLoad(callback);
+                }, 500);
+            }
+        }
+    });
+</script>
+
+</div>
+<!-- end: #wrapper -->
+</body>
 </html>
