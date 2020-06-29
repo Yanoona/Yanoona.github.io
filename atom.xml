@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Yanoona.github.io</id>
     <title>姿势美如画( *・ω・)✄╰ひ╯</title>
-    <updated>2020-05-13T09:29:16.790Z</updated>
+    <updated>2020-06-29T06:16:27.193Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Yanoona.github.io"/>
     <link rel="self" href="https://Yanoona.github.io/atom.xml"/>
@@ -10,6 +10,344 @@
     <logo>https://Yanoona.github.io/images/avatar.png</logo>
     <icon>https://Yanoona.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 姿势美如画( *・ω・)✄╰ひ╯</rights>
+    <entry>
+        <title type="html"><![CDATA[Java8 Stream流学习笔记]]></title>
+        <id>https://Yanoona.github.io/2rO0MFRF0/</id>
+        <link href="https://Yanoona.github.io/2rO0MFRF0/">
+        </link>
+        <updated>2020-06-29T06:12:18.000Z</updated>
+        <summary type="html"><![CDATA[<h2 id="流简介">流简介</h2>
+<h3 id="1流是什么">1.流是什么？</h3>
+<blockquote>
+<p>流到底是什么呢🍧？简短的定义就是“ 从支持<strong>数据处理操作</strong>的<strong>源</strong>生成的<strong>元素序列</strong> ”</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<h2 id="流简介">流简介</h2>
+<h3 id="1流是什么">1.流是什么？</h3>
+<blockquote>
+<p>流到底是什么呢🍧？简短的定义就是“ 从支持<strong>数据处理操作</strong>的<strong>源</strong>生成的<strong>元素序列</strong> ”</p>
+</blockquote>
+<!-- more -->
+<ul>
+<li>元素序列：就像集合一样，流也提供了一个接口，可以访问特定元素类型的一组有序值。但流的目的在于表达计算，比如filter、sorted和map。集合讲的事数据，流讲的是计算。</li>
+<li>源：流会使用一个提供数据的源，如集合、数组或者输入/输出资源。</li>
+<li>数据处理操作：流的数据处理功能支持类似于数据库的操作，以及函数式编程语言中的常用操作，如filter、map、reduce、find、match、sort等。流操作可以顺序执行，也可以并行执行。</li>
+</ul>
+<p>流操作两个重要的特点：</p>
+<ol>
+<li>流水线：很多流操作本身会返回一个流，这样多个操作就可以链接起来，形成一个大的流水线。</li>
+<li>内部迭代：与使用迭代器显示迭代的集合不同，流的迭代操作是在背后进行的。</li>
+</ol>
+<h3 id="2流与集合">2.流与集合</h3>
+<blockquote>
+<p>流与集合之间的差异在于<strong>什么时候进行计算</strong>。</p>
+</blockquote>
+<p>集合是一个内存中的数据结构，它包含数据结构中目前所有的值——集合中的每个元素都得先算出来才能添加到集合中。（集合中的每个元素都是放在内存里的，元素都得先算出来才能成为集合的一部分。）</p>
+<p>流是在概念上固定的数据结构（你不能添加或删除元素），其元素则是<strong>按需计算的</strong>。（流就像是一个延迟创建的集合：只有在消费者要求的时候才会计算值。）</p>
+<h4 id="21-流只能遍历一次">2.1 流只能遍历一次</h4>
+<p><mark>和迭代器类似，流只能遍历一次。遍历完之后，我们就说这个流已经被消费掉了。</mark></p>
+<p>就比如下面这段代码：</p>
+<pre><code class="language-java">List&lt;String&gt; title = Arrays.asList(&quot;Java8&quot;,&quot;In&quot;,&quot;Action&quot;);
+Stream&lt;String&gt; s = title.stream();
+s.forEach(System.out::println);
+//到这里就会报出异常：流已被操作或者关闭
+s.forEach(System.out::println);
+</code></pre>
+<h3 id="3-外部迭代与内部迭代">3. 外部迭代与内部迭代</h3>
+<blockquote>
+<p>使用Collection接口需要用户去做迭代（比如用for-each），这称为外部迭代。相反，Streams库使用<strong>内部迭代</strong>——它帮你把迭代做了，还把得到的流值存在了某个地方，你只要给出一个函数说要干什么就可以了。</p>
+</blockquote>
+<h4 id="31-使用内部迭代的原因">3.1 使用内部迭代的原因</h4>
+<p>内部迭代时，项目可以透明的并行处理，或者用更优化的顺序进行处理。</p>
+<p>Streams库的内部迭代可以自动选择一种适合硬件的数据表示和并行实现。与此相反，一旦通过写for-each而选择了外部迭代，那你基本上就要自己管理所有的并行问题了（<em>自己管理</em>实际上意味着“某个良辰吉日我们会把它并行化”或者“开始了关于人物和synchronized的漫长二而艰苦的斗争”。）</p>
+<figure data-type="image" tabindex="1"><img src="https://Yanoona.github.io/post-images/1593411345757.png" alt="" loading="lazy"></figure>
+<h3 id="4-流操作">4. 流操作</h3>
+<blockquote>
+<p>可以连接起来的流操作称为<strong>中间操作</strong>，关闭流的操作称为<strong>终端操作</strong>。</p>
+</blockquote>
+<h4 id="41-中间操作">4.1 中间操作</h4>
+<p>诸如filter或sorted等中间操作会返回另一个流。折让多个操作可以链接起来形成一个查询。重要的是，<mark>除非流水线上出发一个终端操作，否则中间操作不会执行任何处理——它们很懒。</mark></p>
+<h4 id="42-终端操作">4.2 终端操作</h4>
+<p>终端操作会从流的流水线生成结果。其结果是任何不是流的值，比如List、Integer，甚至是void。</p>
+<h4 id="43-使用流">4.3 使用流</h4>
+<blockquote>
+<p>总而言之，流的使用一般包括三件事：</p>
+<ol>
+<li>一个数据源（如集合）来执行一个查询；</li>
+<li>一个中间操作链，形成一条流的流水线；</li>
+<li>一个终端操作，执行流水线，并能生成结果；</li>
+</ol>
+</blockquote>
+<p>中间操作：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">操作</th>
+<th style="text-align:center">类型</th>
+<th style="text-align:center">返回类型</th>
+<th style="text-align:center">操作参数</th>
+<th style="text-align:center">函数描述符</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">filter</td>
+<td style="text-align:center">中间</td>
+<td style="text-align:center">Stream<T></td>
+<td style="text-align:center">Predicate<T></td>
+<td style="text-align:center">T -&gt; boolean</td>
+</tr>
+<tr>
+<td style="text-align:center">map</td>
+<td style="text-align:center">中间</td>
+<td style="text-align:center">Stream<R></td>
+<td style="text-align:center">Funcation&lt;T，R&gt;</td>
+<td style="text-align:center">T -&gt; R</td>
+</tr>
+<tr>
+<td style="text-align:center">limit</td>
+<td style="text-align:center">中间</td>
+<td style="text-align:center">Stream<T></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">sorted</td>
+<td style="text-align:center">中间</td>
+<td style="text-align:center">Stream<T></td>
+<td style="text-align:center">Comparator<T></td>
+<td style="text-align:center">(T，T) -&gt; int</td>
+</tr>
+<tr>
+<td style="text-align:center">distinct</td>
+<td style="text-align:center">中间</td>
+<td style="text-align:center">Stream<T></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<p>终端操作：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">操作</th>
+<th style="text-align:center">类型</th>
+<th style="text-align:center">目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">forEach</td>
+<td style="text-align:center">终端</td>
+<td style="text-align:center">消费流中的每个元素并对其应用Lambda。这一操作返回void</td>
+</tr>
+<tr>
+<td style="text-align:center">count</td>
+<td style="text-align:center">终端</td>
+<td style="text-align:center">返回流中元素的个数。这一操作返回long</td>
+</tr>
+<tr>
+<td style="text-align:center">collect</td>
+<td style="text-align:center">终端</td>
+<td style="text-align:center">把流归约成一个集合，比如List、Map甚至是Integer。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="小结">小结</h3>
+<ol>
+<li>流是“ 从支持数据处理操作的源生成的一系列元素 ”。</li>
+<li>流利用内部迭代：迭代通过filter、map、sorted等操作被抽象掉了。</li>
+<li>流操作有两类：中间操作和终端操作（也就终止操作）。</li>
+<li>filter和map等中间操作会返回一个流，并可以链接在一起。可以把它们设置成一条流水线，但并不会生成任何结果。</li>
+<li>forEach和count等终端操作会返回一个非流的值，并处理流水线以返回结果。</li>
+<li>流中的元素是按需计算的。</li>
+</ol>
+<hr>
+<h2 id="使用流">使用流</h2>
+<h3 id="1-筛选和切片">1. 筛选和切片</h3>
+<h4 id="11-谓词筛选">1.1 谓词筛选</h4>
+<blockquote>
+<p>Stream接口支持filter方法。该操作会接收一个谓词（一个返回boolean的函数）作为参数，并返回一个包括所有符合谓词的元素的流</p>
+</blockquote>
+<p>代码示例：</p>
+<pre><code class="language-java">List&lt;Dish&gt; vegetarianMenu = menu.stream().filter(Dish::isVegetarian).collect(toList());
+</code></pre>
+<h4 id="12-筛选各异元素去重">1.2 筛选各异元素（去重）</h4>
+<p><mark>使用<code>distinct()</code>方法。</mark></p>
+<h4 id="13-截短流">1.3 截短流</h4>
+<blockquote>
+<p>流支持==<strong>limit(n)</strong>==方法，该方法会返回一个不超过给定长度的流。所需的长度做为参数传递给limit。如果流是有序的，则最多会返回前n个元素。</p>
+</blockquote>
+<h4 id="14-跳过元素">1.4 跳过元素</h4>
+<blockquote>
+<p>流支持==<strong>skip(n)</strong>==方法，该方法会返回一个扔4</p>
+<p>掉前n个元素的流。如果流中元素不足n个，则返回一个空值。</p>
+</blockquote>
+<h3 id="2-映射">2. 映射</h3>
+<p>map</p>
+<blockquote>
+<p>流支持<strong>map</strong>方法，它会接收一个函数做为参数。这个函数会被应用到每个元素上，并将其映射成一个新的元素 （使用映射一次，是因为它和转换类似，但其中的细微差别在于它是**“创建一个新版本”而不是去“修改”**）。</p>
+</blockquote>
+<p>flatMap</p>
+<blockquote>
+<p>流支持flatMap方法，它的效果是，把一个流中的每个值都换成另一个流，然后把所有的流连接起来成为一个流。</p>
+</blockquote>
+<h3 id="3查找和匹配">3.查找和匹配</h3>
+<h4 id="31-检查谓词是否至少匹配一个元素">3.1 检查谓词是否至少匹配一个元素</h4>
+<p>使用==<strong>anyMatch</strong>==方法。anyMatch方法返回一个boolean，因此是一个终端操作。</p>
+<h4 id="32-检查谓词是否匹配所有元素">3.2 检查谓词是否匹配所有元素</h4>
+<p>使用==<strong>allMatch</strong>==方法。它的工作原理和anyMatch类似，但它会看看流中的元素是否<strong>都能</strong>匹配给定的谓词。</p>
+<p>其中和allMatch相对的是==<strong>noneMatch</strong>==。它可以确保流中没有任何元素与给定的谓词匹配。</p>
+<p><mark>注意：anyMatch、allMatch和noneMatch这三个操作都用到了我们所谓的<strong>短路</strong>，这就是大家熟悉的Java中&amp;&amp;和||运算符短路在流中的版本。</mark></p>
+<blockquote>
+<p><strong>短路求值：</strong></p>
+<p>​         对于流而言，某些操作（例如allMatch、anyMatch、noneMatch、findFirst和findAny）不用处理整个流就能得到结果。只要找到一个元素，就可以有结果了。同样，limit也是一个短路操作：它只需要创建一个给定大小的流，而用不着处理流中所有的元素。在碰到无限大小的流的时候，这种操作就有用了：它们可以把<strong>无限流</strong>变成<strong>有限流</strong>。</p>
+</blockquote>
+<h4 id="33-查找元素">3.3 查找元素</h4>
+<p>==<strong>findAny</strong>==方法将返回当前流中的任意元素。</p>
+<p>其中这里涉及到<strong>Optional</strong>函数，以下为Optional简介：</p>
+<blockquote>
+<p>Optional<T>类（java.util.Optional）是一个容器类，代表一个值存在或不存在。findAny有时候可能什么元素都没找到。Java8的库设计人员引入了Optional<T>，这样就不用返回众所周知容易出问题的null了。</p>
+</blockquote>
+<p>Optional常用检查方法说明：</p>
+<ul>
+<li>isPresent（）将在Optional包含值的时候返回true，否则返回false。</li>
+<li>ifPresent（Consumer<T> block）会在值存在的时候执行给定的代码块。</li>
+<li>T get（）会在只存在时返回值，否则抛出一个NoSuchElement异常。</li>
+<li>T orElse（T other）会在值存在时返回值，否则返回一个默认值。</li>
+</ul>
+<hr>
+<h3 id="4-到目前为止所学习的中间操作和终端操作记录">4. 到目前为止所学习的中间操作和终端操作记录</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">操作</th>
+<th style="text-align:center">类型</th>
+<th style="text-align:center">返回类型</th>
+<th style="text-align:center">操作参数</th>
+<th style="text-align:center">函数描述符</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">filter</td>
+<td style="text-align:center">中间</td>
+<td style="text-align:center">Stream<T></td>
+<td style="text-align:center">Predicate<T></td>
+<td style="text-align:center">T -&gt; boolean</td>
+</tr>
+<tr>
+<td style="text-align:center">map</td>
+<td style="text-align:center">中间</td>
+<td style="text-align:center">Stream<R></td>
+<td style="text-align:center">Funcation&lt;T，R&gt;</td>
+<td style="text-align:center">T -&gt; R</td>
+</tr>
+<tr>
+<td style="text-align:center">limit</td>
+<td style="text-align:center">中间（有状态-有界）</td>
+<td style="text-align:center">Stream<T></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">sorted</td>
+<td style="text-align:center">中间</td>
+<td style="text-align:center">Stream<T></td>
+<td style="text-align:center">Comparator<T></td>
+<td style="text-align:center">(T，T) -&gt; int</td>
+</tr>
+<tr>
+<td style="text-align:center">distinct</td>
+<td style="text-align:center">中间（有状态-无界）</td>
+<td style="text-align:center">Stream<T></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">skip</td>
+<td style="text-align:center">中间（有状态-有界）</td>
+<td style="text-align:center">Stream<T></td>
+<td style="text-align:center">long</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">flatMap</td>
+<td style="text-align:center">中间</td>
+<td style="text-align:center">Stream<R></td>
+<td style="text-align:center">Funcation&lt;T,Stream<R>&gt;</td>
+<td style="text-align:center">T -&gt; boolean</td>
+</tr>
+<tr>
+<td style="text-align:center">anyMatch</td>
+<td style="text-align:center">终端</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">Predicate<T></td>
+<td style="text-align:center">T -&gt; boolean</td>
+</tr>
+<tr>
+<td style="text-align:center">noneMatch</td>
+<td style="text-align:center">终端</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">Predicate<T></td>
+<td style="text-align:center">T -&gt; boolean</td>
+</tr>
+<tr>
+<td style="text-align:center">allMatch</td>
+<td style="text-align:center">终端</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">Predicate<T></td>
+<td style="text-align:center">T -&gt; boolean</td>
+</tr>
+<tr>
+<td style="text-align:center">findAny</td>
+<td style="text-align:center">终端</td>
+<td style="text-align:center">Optional<T></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">findFirst</td>
+<td style="text-align:center">终端</td>
+<td style="text-align:center">Optional<T></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">forEach</td>
+<td style="text-align:center">终端</td>
+<td style="text-align:center">void</td>
+<td style="text-align:center">Consumer<T></td>
+<td style="text-align:center">T -&gt; void</td>
+</tr>
+<tr>
+<td style="text-align:center">collect</td>
+<td style="text-align:center">终端</td>
+<td style="text-align:center">R</td>
+<td style="text-align:center">Collector&lt;T，A，R&gt;</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">reduce</td>
+<td style="text-align:center">终端（有状态-有界）</td>
+<td style="text-align:center">Optional<T></td>
+<td style="text-align:center">BinaryOperator</td>
+<td style="text-align:center">（T，T） -&gt; T</td>
+</tr>
+<tr>
+<td style="text-align:center">count</td>
+<td style="text-align:center">终端</td>
+<td style="text-align:center">long</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<p>更新时间：2020/6/29</p>
+<!-- more -->
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Spring 知识回顾之 体系结构]]></title>
         <id>https://Yanoona.github.io/ta0wVkBzF/</id>
@@ -867,131 +1205,6 @@ create table `zy_fy_year` (
   `year_ZJJE` decimal(34,2) DEFAULT NULL COMMENT '总计金额'
 ) engine=InnoDB default charset=utf8;
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[CentOS 7安装和卸载MySql]]></title>
-        <id>https://Yanoona.github.io/TeSMMvZK8/</id>
-        <link href="https://Yanoona.github.io/TeSMMvZK8/">
-        </link>
-        <updated>2020-02-19T03:00:11.000Z</updated>
-        <summary type="html"><![CDATA[<h2 id="概述">😀概述</h2>
-<p>记录一次CentOS7安装Mysql5.7的步骤和卸载Mysql的步骤。</p>
-<h2 id="环境说明">😃环境说明</h2>
-<p>机器系统版本：CentOS7.9<br>
-所安装Mysql版本：MySql5.7</p>
-]]></summary>
-        <content type="html"><![CDATA[<h2 id="概述">😀概述</h2>
-<p>记录一次CentOS7安装Mysql5.7的步骤和卸载Mysql的步骤。</p>
-<h2 id="环境说明">😃环境说明</h2>
-<p>机器系统版本：CentOS7.9<br>
-所安装Mysql版本：MySql5.7</p>
-<!-- more -->
-<h2 id="准备安装">😄准备安装</h2>
-<p>确保机器上已安装<code>wget</code>,如果没有安装过就使用以下命令进行安装。</p>
-<pre><code>yum -y install wget
-</code></pre>
-<h2 id="开始安装">😁开始安装</h2>
-<h3 id="进入官网复制yum源">进入官网复制yum源</h3>
-<figure data-type="image" tabindex="1"><img src="https://Yanoona.github.io/post-images/1582081400516.png" alt="" loading="lazy"></figure>
-<p>直接点开这个地址并选择第二个（<strong>第一个里面没有MySql5.7版本的下载</strong>）⚡️：<a href="https://dev.mysql.com/downloads/repo/yum/">https://dev.mysql.com/downloads/repo/yum/</a>⚡️</p>
-<p>点进去之后，右击超链接文字<strong>No thanks, just start my download.</strong>，再点击<strong>复制链接地址</strong>即可。如下图所示：<br>
-<img src="https://Yanoona.github.io/post-images/1582081448581.png" alt="" loading="lazy"></p>
-<hr>
-<h3 id="下载和安装yum源">下载和安装yum源</h3>
-<p>在服务器上运行下载命令👇：</p>
-<pre><code>wget https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
-</code></pre>
-<p>运行后继续输入以下命令：</p>
-<pre><code>rpm -ivh mysql80-community-release-el7-3.noarch.rpm
-</code></pre>
-<hr>
-<h3 id="修改yum源默认安装的版本">修改yum源默认安装的版本</h3>
-<p>👴运行查看可安装的mysql的命令：</p>
-<pre><code>yum repolist all| grep mysql
-</code></pre>
-<figure data-type="image" tabindex="2"><img src="https://Yanoona.github.io/post-images/1582081748024.png" alt="" loading="lazy"></figure>
-<p>可以看出默认是启用的mysql8.0，5.7是关闭的。</p>
-<p>接着运行修改yum配置⚡️（enabled=1 想要安装哪个版本就在哪个版本的后面把0换成1，因为默认是最新版，所以需要把最新版的1换成0，5.7的换为1）⚡️命令：</p>
-<pre><code>vim /etc/yum.repos.d/mysql-community.repo
-</code></pre>
-<figure data-type="image" tabindex="3"><img src="https://Yanoona.github.io/post-images/1582081761005.png" alt="" loading="lazy"></figure>
-<p>修改完成后再运行以下命令查看是否已经生效：</p>
-<pre><code>yum repolist all| grep mysql
-</code></pre>
-<figure data-type="image" tabindex="4"><img src="https://Yanoona.github.io/post-images/1582081772383.png" alt="" loading="lazy"></figure>
-<p>可以看到配置文件已经生效，接下来使用yum安装MySql。</p>
-<hr>
-<h3 id="使用yum安装mysql">使用yum安装MySql</h3>
-<p>运行安装命令👇：</p>
-<pre><code>yum install -y mysql-community-server
-</code></pre>
-<figure data-type="image" tabindex="5"><img src="https://Yanoona.github.io/post-images/1582081783832.png" alt="" loading="lazy"></figure>
-<p><strong>等待安装完成即可！👀</strong></p>
-<h2 id="mysql配置">😆MySQL配置</h2>
-<h3 id="初始配置">初始配置</h3>
-<h4 id="启动mysql服务">🤔启动MySQL服务</h4>
-<pre><code>#启动
-systemctl start mysqld
-#查看状态
-systemctl status mysqld
-#设置开机自启
-systemctl enable mysqld
-</code></pre>
-<h4 id="查看mysql的初始密码">👀查看MySQL的初始密码</h4>
-<blockquote>
-<p>初始密码只有在第一次安装或者完全卸载后安装才会有。</p>
-</blockquote>
-<pre><code>grep 'password' /var/log/mysqld.log
-</code></pre>
-<figure data-type="image" tabindex="6"><img src="https://Yanoona.github.io/post-images/1582081794593.png" alt="" loading="lazy"></figure>
-<p>其中的👉<code>.trj4redlL!</code>👈为初始密码，使用其登录MySQL即可。</p>
-<h4 id="修改初始密码">修改初始密码</h4>
-<blockquote>
-<p>注意：MySQL5.7默认密码策略要求密码⭐️必须是<strong>大小写字母数字特殊字母</strong>的组合⭐️，至少8位</p>
-</blockquote>
-<pre><code>#修改密码
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'Root123@';
-</code></pre>
-<h4 id="设置简单密码">设置简单密码</h4>
-<p>修改MySQL密码策略，并设置简单密码进行访问🙈🙈。</p>
-<pre><code>#查看MySQL密码策略
-show variables like 'validate_password%';
-#设置全局验证密码策略
-set global validate_password_policy=low;
-#设置全局验证密码混合情况计数
-set global validate_password_mixed_case_count=0;
-#设置全局验证密码特殊的字符计数
-set global validate_password_special_char_count=0;
-#设置全集验证密码长度
-set global validate_password_length=4;
-</code></pre>
-<p>修改密码并赋予用户权限（设置可远程访问🤖）。</p>
-<pre><code>#修改密码
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';
-
-grant all privileges on *.* to 'root'@'%' identified by 'root' with grant option;
-</code></pre>
-<p>刷新权限🙉。</p>
-<pre><code>flush privileges;
-</code></pre>
-<hr>
-<h3 id="拓展配置">拓展配置</h3>
-<h4 id="修改mysql字符集使其支持中文">修改MySQL字符集，使其支持中文🇨🇳</h4>
-<pre><code>#显示字符集变量
-show variables like '%character%';
-</code></pre>
-<figure data-type="image" tabindex="7"><img src="https://Yanoona.github.io/post-images/1582081808778.png" alt="" loading="lazy"></figure>
-<p>退出MySQL，编辑MySQL配置文件<strong>my.cnf</strong>，并在文件中添加👇👇行。文件路径在：<code>/etc/my.cnf</code>。</p>
-<pre><code>#在[mysqld]中添加
-character-set-server=utf8
-#在[client]中添加,没有此行请自己添加
-default-character-set=utf8
-#在[mysql]中添加,没有此行请自己添加
-default-character-set=utf8
-</code></pre>
-<p>保存后，再重启MySQL服务登录MySQL查看👀字符集是否全为utf8。</p>
-<figure data-type="image" tabindex="8"><img src="https://Yanoona.github.io/post-images/1582081817742.png" alt="" loading="lazy"></figure>
 ]]></content>
     </entry>
 </feed>
