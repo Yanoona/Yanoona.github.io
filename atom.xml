@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Yanoona.github.io</id>
-    <title>姿势美如画( *・ω・)✄╰ひ╯</title>
-    <updated>2020-06-29T06:16:27.193Z</updated>
+    <title>|ω･`)暗中观察</title>
+    <updated>2020-06-29T06:45:11.290Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Yanoona.github.io"/>
     <link rel="self" href="https://Yanoona.github.io/atom.xml"/>
     <subtitle>大爷不进来看看吗？这里有好康的哦~~~</subtitle>
     <logo>https://Yanoona.github.io/images/avatar.png</logo>
     <icon>https://Yanoona.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, 姿势美如画( *・ω・)✄╰ひ╯</rights>
+    <rights>All rights reserved 2020, |ω･`)暗中观察</rights>
     <entry>
         <title type="html"><![CDATA[Java8 Stream流学习笔记]]></title>
         <id>https://Yanoona.github.io/2rO0MFRF0/</id>
